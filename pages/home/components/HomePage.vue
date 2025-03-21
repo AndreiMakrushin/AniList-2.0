@@ -1,7 +1,14 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
-  <div>home rer</div>
+  <div class="text-32 font-bold text-red-900">
+wee
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<style scoped>
 
-<style scoped></style>
+</style>
+
