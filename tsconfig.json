@@ -1,0 +1,11 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"], // Алиас для корневой директории
+      "assets/*": ["./shared/assets/*"], // Алиас для assets
+      "public/*": ["./shared/public/*"] // Алиас для public
+    }
+  }
+}
