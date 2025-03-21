@@ -1,13 +1,12 @@
-<template>
-  <HomePage />
-</template>
+<template> <HomePage /> </template>
 
 <script setup lang="ts">
-import HomePage from "@/pages/home";
+  import HomePage from '@/pages/home'
 
-useHead({
-  title: "AniList",
-});
+  useHead({
+    title: 'AniList',
+  })
 </script>
 
 <style scoped></style>
+
