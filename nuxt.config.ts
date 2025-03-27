@@ -12,7 +12,6 @@ export default defineNuxtConfig({
 
   dir: {
     pages: 'app/routes',
-    plugins: 'app/plugins',
     layouts: 'app/layouts',
     middleware: 'app/middleware',
     modules: 'app/modules',
@@ -24,6 +23,13 @@ export default defineNuxtConfig({
     viewer: false,
     configPath: "nuxt-tailwind.config",
   },
+  runtimeConfig:{
+    public:{
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY
+    }
+  },
+  plugins: ["~/plugins/supabase.client"],
 
   imports: {
     dirs: ["shared/types/*"],
