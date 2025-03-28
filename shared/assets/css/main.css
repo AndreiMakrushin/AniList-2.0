@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+
+html{
+    background-image: url('@/shared/assets/image/bg.jpg');
+
+}

@@ -25,7 +25,9 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.3.13",
+    "@nuxt/types": "^2.18.1",
     "@nuxtjs/tailwindcss": "^6.13.2",
+    "@supabase/supabase-js": "^2.49.3",
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^9.32.0",
     "prettier": "^3.5.3",
