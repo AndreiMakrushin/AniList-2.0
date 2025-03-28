@@ -1,23 +1,17 @@
-import type { IUser, IRegisterForm } from '@/shared/types/types'
+import type { IUser, IRegisterForm } from '~/shared/types'
+import { useSupabaseAuth } from '../helpers/useSupabaseAuth'
 
-type TRegisterResponse<T> = {
-    data: T | null
-    error: { message: string } | null
-  }
+type TRegisterResponse<T> = 
+  | { data: T; error: null }
+  | { data: null; error: { message: string } }
   
-  export const useRegister = () => {
-    const { $supabase } = useNuxtApp()
   
-    const registerUser = async (
-      credentials: IRegisterForm
-    ): Promise<TRegisterResponse<IUser>> => {
+  export const useRegister = async (credentials: IRegisterForm): Promise<TRegisterResponse<IUser>> => {
+    const  {signUp, getUserFromTable, insertUser}  = useSupabaseAuth()
+    
       const { name, email, password } = credentials
 
-      const { data: existingUser } = await $supabase
-        .from('users')
-        .select()
-        .eq('email', email)
-        .single()
+      const { data: existingUser } = await getUserFromTable(email)
   
       if (existingUser) {
         return {
@@ -25,12 +19,11 @@ type TRegisterResponse<T> = {
           error: { message: 'Пользователь с таким email уже существует' }
         }
       }
-  
 
-      const { error: authError } = await $supabase.auth.signUp({
+      const { error: authError } = await signUp(
         email,
         password
-      })
+      )
   
       if (authError) {
         return {
@@ -38,11 +31,8 @@ type TRegisterResponse<T> = {
           error: { message: authError.message || 'Ошибка регистрации' }
         }
       }
-  
 
-      const { error: insertError } = await $supabase
-        .from('users')
-        .insert({ name, email })
+      const { error: insertError } = await insertUser(name, email)
   
       if (insertError) {
         return {
@@ -52,11 +42,7 @@ type TRegisterResponse<T> = {
       }
   
       
-      const { data: newUser, error: fetchError } = await $supabase
-        .from('users')
-        .select<string, IUser>()
-        .eq('email', email)
-        .single()
+      const { data: newUser, error: fetchError } = await getUserFromTable(email)
   
       if (fetchError || !newUser) {
         return {
@@ -71,5 +57,3 @@ type TRegisterResponse<T> = {
       }
     }
   
-    return { registerUser }
-  }

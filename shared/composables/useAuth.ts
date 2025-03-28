@@ -1,20 +1,13 @@
-import type {IUser} from '@/shared/types/types'
-type TAuthResponse<T = unknown> = 
-  | { data: T; error: null }
-  | { data: null; error: { message: string } }
+import type {IUser, TUserResponse, ILoginForm} from '~/shared/types'
+import { useSupabaseAuth } from '../helpers/useSupabaseAuth'
 
-export const useAuth = (): {
-  login: (
-    email: string, 
-    password: string
-  ) => Promise<TAuthResponse<IUser>>
-} => {
-  const { $supabase } = useNuxtApp()
+export const useAuth = async (credentials: ILoginForm): Promise<TUserResponse<IUser>> => {
+
+  const { signIn, getUserFromTable } = useSupabaseAuth()
+
+  const { email, password } = credentials
   
-  const login = async (
-    email: string, 
-    password: string
-  ): Promise<TAuthResponse<IUser>> => {
+  
     if (!email || !password) {
       return { 
         data: null, 
@@ -23,10 +16,7 @@ export const useAuth = (): {
     }
     
     try {
-      const { data, error } = await $supabase.auth.signInWithPassword({
-        email,
-        password
-      })
+      const { data, error } = await signIn(email, password)
 
       if (error) {
         return { data: null, error }
@@ -39,17 +29,13 @@ export const useAuth = (): {
         }
       }
 
-      const { data: user, error: queryError } = await $supabase
-        .from('users')
-        .select<string, IUser>()
-        .eq('email', email)
-        .single()
+      const { data: user, error: queryError } = await getUserFromTable(email)
 
       if (queryError) {
         return { data: null, error: queryError }
       }
 
-      return { data: user, error: null }
+      return { data: user as IUser, error: null }
     } catch (err) {
       return { 
         data: null, 
@@ -60,5 +46,4 @@ export const useAuth = (): {
     }
   }
 
-  return { login }
-}
+  
