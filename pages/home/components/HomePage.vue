@@ -46,16 +46,24 @@ const handleRegister = async () => {
     console.log('Registered user:', result.data)
   }
 }
+
+
+
 </script>
 
 <template>
-  <div class="text-7xl" @click="handleLogin">
-ergfwr
+  <div>
+  
+
+   <div class="text-7xl" @click="handleLogin">
+    Login
   </div>
 
   <div class="text-7xl" @click="handleRegister">
     Register
   </div>
+
+  <SvgSprite icon="exit" :width="100" :height="100" /></div>
 </template>
 
 <style scoped>

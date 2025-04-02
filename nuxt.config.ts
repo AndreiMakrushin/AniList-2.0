@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-
+ssr: false,
   modules: [
     "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
@@ -33,7 +33,12 @@ export default defineNuxtConfig({
   runtimeConfig:{
     public:{
       supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
-      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
+      animeList: process.env.NUXT_PUBLIC_ANIME_LIST,
+      animeSingle: process.env.NUXT_PUBLIC_ANIME_SINGLE,
+      animeSearch: process.env.NUXT_PUBLIC_ANIME_SEARCH,
+      animeSimilar: process.env.NUXT_PUBLIC_ANIME_SIMILAR,
+      animePoster: process.env.NUXT_PUBLIC_ANIME_POSTER
     }
   },
   plugins: ["~/plugins/supabase.client"],
