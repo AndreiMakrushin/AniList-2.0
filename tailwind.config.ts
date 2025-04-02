@@ -19,6 +19,16 @@ export default <Partial<Config>>{
         mobile: "500px",
         notebooks: "1500px",
       },
+      boxShadow: {
+        'shadowDrop': '0 20px 40px 0 rgba(0,0,0,.3)'
+    },
+    transitionDuration: {
+        'short': '0.3s'
+    },
+    backgroundColor: {
+        'cardOpacity': 'rgba(0, 0, 0, 0.5)',
+        'cardOpacity2': 'rgba(0, 0, 0, 0.3)'
+    }
       
     },
   }}
