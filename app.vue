@@ -12,7 +12,7 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div>
+  <div class="image">
     <Header />
 
      <NuxtRouteAnnouncer />
@@ -23,3 +23,12 @@ onMounted(async() => {
   </div>
 </template>
 
+<style scoped>
+.image {
+  background-image: url('./shared/public/images/bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+</style>

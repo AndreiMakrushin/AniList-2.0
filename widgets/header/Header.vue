@@ -22,7 +22,7 @@ const debouncedSearch = useDebounceFn(async (query: string) => {
 }, 1000)
 
 const goPageAnime = (id: number) => {
-    navigateTo({ name: 'anime', params: { id: id, episode: '1' } })
+    navigateTo(`/anime/${id}`)
   searchAnime.value = ''
 }
 
@@ -36,7 +36,7 @@ const userAvatar = computed(() => {
 </script>
 
 <template>
-    <header class="flex w-[100%] relative">
+    <div class="flex w-[100%] relative">
     <div class="flex flex-col w-full">
       <div class="justify-between items-center flex px-4 py-2 w-full">
         <div class="flex flex-row gap-4 w-[60%]">
@@ -64,7 +64,7 @@ const userAvatar = computed(() => {
 
           <Avatar
             v-if="userAvatar"
-            class="w-[32px] h-[32px]"
+            class-avatar="w-[32px] h-[32px]"
             :img="userAvatar"
             @click="modalMenu = !modalMenu"
           />
@@ -87,7 +87,7 @@ const userAvatar = computed(() => {
 
       <Button icon="exit" :width="20" :height="20" label="Выйти" @click="useLogout"/>
     </ModalMenu>
-  </header>
+  </div>
 </template>
 
 <style scoped>

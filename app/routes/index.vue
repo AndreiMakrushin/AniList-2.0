@@ -1,5 +1,3 @@
-<template> <HomePage /> </template>
-
 <script setup lang="ts">
   import HomePage from '@/pages/home'
 
@@ -7,6 +5,8 @@
     title: 'AniList',
   })
 </script>
+
+<template> <HomePage /> </template>
 
 <style scoped></style>
 

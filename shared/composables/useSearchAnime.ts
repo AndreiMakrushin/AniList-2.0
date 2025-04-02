@@ -3,6 +3,7 @@ import type { TAnime } from '~/shared/types'
 export const useSearchAnime = async (searchAnime: string): Promise<TAnime | null> => {
     const config = useRuntimeConfig()
     const API_search = config.public.animeSearch
+    
     try {
       const response = await fetch(`${API_search}${searchAnime}`);
       
