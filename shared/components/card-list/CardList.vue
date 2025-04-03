@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import type { TAnime } from '~/shared/types';
+import { defineProps } from "vue";
+import type { TAnime } from "~/shared/types";
 
 const emit = defineEmits<{
-  (e: 'push', id: number): void
-}>()
+  (e: "push", id: number): void;
+}>();
 
 defineProps<{
-  anime: TAnime[] | null
-}>()
+  anime: TAnime[] | null;
+}>();
 
 const routerPushing = (e: number) => {
-  emit('push', e)
-}
+  emit("push", e);
+};
 </script>
 
 <template>
@@ -29,8 +29,7 @@ const routerPushing = (e: number) => {
       />
 
       <div
-        class="flex absolute z-10 top-0 left-0 w-full h-full
-        hover:bg-cardOpacity hover:text-white duration-300 items-center justify-center text-transparent"
+        class="flex absolute z-10 top-0 left-0 w-full h-full hover:bg-cardOpacity hover:text-white duration-300 items-center justify-center text-transparent"
       >
         <SvgSprite :width="50" :height="50" icon="icon-play" />
       </div>

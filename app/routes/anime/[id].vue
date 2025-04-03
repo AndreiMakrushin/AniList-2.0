@@ -1,33 +1,28 @@
 <script setup lang="ts">
-import AnimePage from '@/pages/anime';
+import AnimePage from "@/pages/anime";
 
-const config = useRuntimeConfig()
-const singleAnime = config.public.animeSingle
-const route = useRoute()
-const code = route.params.id
+const config = useRuntimeConfig();
+const singleAnime = config.public.animeSingle;
+const route = useRoute();
+const code = route.params.id;
 
-const { data: anime } = await useAsyncData(
-  `anime-${code}`,
-  async () => {
-    try {
-      const response = await fetch(`${singleAnime}${code}`)
-      return await response.json()
-    } catch (error) {
-      console.error('Ошибка загрузки:', error)
-      return null
-    }
+const { data: anime } = await useAsyncData(`anime-${code}`, async () => {
+  try {
+    const response = await fetch(`${singleAnime}${code}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Ошибка загрузки:", error);
+    return null;
   }
-)
+});
 
 useHead({
-  title: anime.value?.names?.ru || 'Аниме'
-})
+  title: anime.value?.names?.ru || "Аниме",
+});
 </script>
 
 <template>
-    <AnimePage />
+  <AnimePage />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

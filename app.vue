@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import Header from './widgets/header'
-import {useAnimeStore} from '@/shared/stores/store'
-import { useGetUserSession } from '@/shared/composables/useGetUserSession'
+import Header from "./widgets/header";
+import { useAnimeStore } from "@/shared/stores/store";
+import { useGetUserSession } from "@/shared/composables/useGetUserSession";
 
-const store = useAnimeStore()
+const store = useAnimeStore();
 
-onMounted(async() => {
-  const result = await useGetUserSession()
-  store.user = result.data
-})
+onMounted(async () => {
+  const result = await useGetUserSession();
+  store.user = result.data;
+});
 </script>
 
 <template>
   <div class="image">
     <Header />
 
-     <NuxtRouteAnnouncer />
+    <NuxtRouteAnnouncer />
 
-      <div class="flex flex-1"><NuxtLayout> 
-      <NuxtPage /> 
-      </NuxtLayout></div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
 <style scoped>
 .image {
-  background-image: url('./shared/public/images/bg.jpg');
+  background-image: url("./shared/public/images/bg.jpg");
   position: relative;
   background-size: cover;
   background-position: center center;
