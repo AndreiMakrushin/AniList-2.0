@@ -1,11 +1,9 @@
-import type { TAnime } from '~/shared/types'
-
-export const useSearchAnime = async (searchAnime: string): Promise<TAnime[] | null> => {
+export const useGetAnimeList = async(page: number) =>{
     const config = useRuntimeConfig()
-    const API_search = config.public.animeSearch
-    
+    const list = config.public.animeList
+
     try {
-      const response = await fetch(`${API_search}${searchAnime}`);
+      const response = await fetch(`${list}${page}&limit=10`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -16,10 +14,10 @@ export const useSearchAnime = async (searchAnime: string): Promise<TAnime[] | nu
       if (!responseData || (Array.isArray(responseData) && responseData.length === 0)) {
         throw new Error('No anime data found in response');
       }
-      
-      return responseData.list;
-    } catch (error) {
-      console.error('Error in animeSearch:', error);
+      return responseData.list
+  }
+  catch (error) {
+      console.error('Error in animeList:', error);
       return null;
     }
-  }
+}

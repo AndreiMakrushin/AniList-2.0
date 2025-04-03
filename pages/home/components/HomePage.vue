@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { useAuth } from "@/shared/composables/useAuth"
-import {useRegister} from "@/shared/composables/useRegister"
-import {useGetUserSession} from "@/shared/composables/useGetUserSession"
+/* import { useAuth } from "@/shared/composables/useAuth"
+import {useRegister} from "@/shared/composables/useRegister" */
+import {useGetAnimeList} from "@/shared/composables/useGetAnimeList"
+import {useAnimeStore} from "@/shared/stores/store"
+import {addUniqueAnime} from "~/shared/helpers/addUniqueAnime"
+import CardList from "~/shared/components/card-list/CardList.vue"
 
-const user = {
+
+const {aniList, page} = storeToRefs(useAnimeStore())
+
+/* const user = {
   email: 'andrei18makrushin@gmail.com',
   password: '12Apple2'
 }
@@ -23,20 +29,10 @@ const handleLogin = async () => {
   } else {
     console.log('Logged in user:', result.data)
   }
-}
+} */
 
-onMounted(async() => {
- const result = await useGetUserSession()
 
- if (result.error) {
-   console.log('Get user failed:', result.error.message)
- }
- else {
-   console.log('Get user:', result.data)
- }
-})
-
-const handleRegister = async () => {
+/* const handleRegister = async () => {
   const result = await useRegister(register)
 
   if (result.error) {
@@ -45,25 +41,42 @@ const handleRegister = async () => {
   }else{
     console.log('Registered user:', result.data)
   }
+} */
+
+const isLoading = ref(false);
+
+const fetchAndAddAnime = async () => {
+  isLoading.value = true;
+  try {
+    const result = await useGetAnimeList(page.value);
+    aniList.value = addUniqueAnime(result, aniList.value);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+
+onMounted(async() => {
+  if (aniList.value) return
+  await fetchAndAddAnime()
+})
+
+const loadMore = async () => {
+  page.value++
+  await fetchAndAddAnime()
 }
-
-
-
 </script>
 
 <template>
-  <div>
-  
-
-   <div class="text-7xl" @click="handleLogin">
-    Login
+  <div class="flex flex-col  items-center justify-between gap-3">
+  <div class="grid gap-[30px] p-[20px] 2xl:grid-cols-6 xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+  <CardList :anime="aniList" />
   </div>
 
-  <div class="text-7xl" @click="handleRegister">
-    Register
-  </div>
 
-  <SvgSprite icon="exit" :width="100" :height="100" /></div>
+<Spinner v-if="isLoading"/>
+
+  <Button v-if="aniList" label="Load more" class="text-white text-base !w-fit !p-3 cursor-pointer" @click="loadMore" /></div>
 </template>
 
 <style scoped>

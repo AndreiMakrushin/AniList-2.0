@@ -105,4 +105,4 @@ export interface IUser {
     };
   }
   
- export type TAnime = IAnimeBase[] & IAnimePlayer[] & IAnimePosters[];
+ export type TAnime = IAnimeBase & IAnimePlayer & IAnimePosters;

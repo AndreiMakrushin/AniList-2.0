@@ -2,15 +2,15 @@
 import type { TAnime } from '@/shared/types'
 import { defineProps } from 'vue'
 const emit = defineEmits<{
-  (e: 'goPageAnime', id: number): void  
+  (e: 'goPageAnime', code: string): void  
 }>()
 
 defineProps<{
-  arrayAnime: TAnime
+  arrayAnime: TAnime[]
 }>()
 
-const goPageAnime = (id: number) => {
-  emit('goPageAnime', id)
+const goPageAnime = (code: string) => {
+  emit('goPageAnime', code)
 }
 </script>
 
@@ -21,7 +21,7 @@ const goPageAnime = (id: number) => {
         v-for="(anime, index) in arrayAnime"
         :key="index"
         class="w-full flex flex-row gap-5 text-white hover:bg-cardOpacity2 duration-short rounded-[10px]"
-        @click="goPageAnime(anime.id)"
+        @click="goPageAnime(anime.code)"
       >
         <img
           :src="`https://dl-20211030-963.anilib.top${anime.posters.small.url}`"

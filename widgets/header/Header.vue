@@ -10,7 +10,7 @@ import { useAnimeStore } from '@/shared/stores/store'
 
 const modalMenu = ref<boolean>(false)
 const searchAnime = ref<string>('')
-const arrayAnime = ref<TAnime | null>(null)
+const arrayAnime = ref<TAnime[] | null>(null)
 const store = useAnimeStore()
 
 const debouncedSearch = useDebounceFn(async (query: string) => {
@@ -21,8 +21,8 @@ const debouncedSearch = useDebounceFn(async (query: string) => {
   }
 }, 1000)
 
-const goPageAnime = (id: number) => {
-    navigateTo(`/anime/${id}`)
+const goPageAnime = (code: string) => {
+    navigateTo(`/anime/${code}`)
   searchAnime.value = ''
 }
 
@@ -36,7 +36,7 @@ const userAvatar = computed(() => {
 </script>
 
 <template>
-    <div class="flex w-[100%] relative">
+    <div class="flex w-[100%] sticky top-0 z-30">
     <div class="flex flex-col w-full">
       <div class="justify-between items-center flex px-4 py-2 w-full">
         <div class="flex flex-row gap-4 w-[60%]">

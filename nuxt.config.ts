@@ -1,14 +1,37 @@
-
+import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 ssr: false,
+
   modules: [
     "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
     "@vueuse/nuxt",
     "@pinia/nuxt",
+    "@primevue/nuxt-module"
   ],
+  css: ["primeicons/primeicons.css"],
+  primevue: {
+    autoImport: true,
+    options: {
+      theme: {
+        preset: Aura,
+        options: {
+          prefix: "p",
+          darkModeSelector: ".fake-app-dark",
+          cssLayer: {
+            name: "primevue",
+            order: "tailwind-base, primevue, tailwind-utilities",
+          },
+        },
+      },
+    },
+    components: {
+      exclude: ['Form', 'FormField'],
+      include: "*",
+    },
+  },
   app: {
     head: {
       link: [
@@ -16,6 +39,7 @@ ssr: false,
       ]
     }
   },
+  
 
   dir: {
     pages: 'app/routes',
