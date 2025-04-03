@@ -68,13 +68,15 @@ const loadMore = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col  items-center justify-between gap-3">
-  <div class="grid gap-[30px] p-[20px] 2xl:grid-cols-6 xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+  <div class="flex flex-col items-center h-full justify-center gap-3">
+  <div v-if="aniList" class="grid gap-[30px] p-[20px] 2xl:grid-cols-6 xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
   <CardList :anime="aniList" />
   </div>
 
 
 <Spinner v-if="isLoading"/>
+
+<img v-if="!aniList && !isLoading" src="@/shared/assets/image/noAnime.png">
 
   <Button v-if="aniList" label="Load more" class="text-white text-base !w-fit !p-3 cursor-pointer" @click="loadMore" /></div>
 </template>

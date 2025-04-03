@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import AnimePage from '@/pages/anime';
-import {useAnimeStore} from "@/shared/stores/store"
 
-import { useRoute } from 'vue-router';
-
-const {aniList} = storeToRefs(useAnimeStore())
-
+const config = useRuntimeConfig()
+const singleAnime = config.public.animeSingle
 const route = useRoute()
+const code = route.params.id
 
-const id = route.params.id
+const { data: anime } = await useAsyncData(
+  `anime-${code}`,
+  async () => {
+    try {
+      const response = await fetch(`${singleAnime}${code}`)
+      return await response.json()
+    } catch (error) {
+      console.error('Ошибка загрузки:', error)
+      return null
+    }
+  }
+)
 
 useHead({
-    title: aniList.value?.find(anime => anime.id === Number(id))?.names.ru,
+  title: anime.value?.names?.ru || 'Аниме'
 })
 </script>
 

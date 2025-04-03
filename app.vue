@@ -17,9 +17,9 @@ onMounted(async() => {
 
      <NuxtRouteAnnouncer />
 
-      <NuxtLayout> 
+      <div class="flex flex-1"><NuxtLayout> 
       <NuxtPage /> 
-      </NuxtLayout>
+      </NuxtLayout></div>
   </div>
 </template>
 
