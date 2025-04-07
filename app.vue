@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Header from "./widgets/header";
 import { useAnimeStore } from "@/shared/stores/store";
 import { useGetUserSession } from "@/shared/composables/useGetUserSession";
 
@@ -12,25 +11,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="image">
-    <Header />
+  <NuxtRouteAnnouncer />
 
-    <NuxtRouteAnnouncer />
-
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
-<style scoped>
-.image {
-  background-image: url("./shared/public/images/bg.jpg");
-  position: relative;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  overflow-y: scroll;
-}
-</style>
+
