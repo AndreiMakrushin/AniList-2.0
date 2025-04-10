@@ -2,7 +2,7 @@
 import { useLogout } from "~/shared/composables/useLogout";
 import ModalMenu from "@/shared/components/popup-menu";
 import AnimeBySearch from "./widgets/anime-by-search";
-
+import Avatar from "~/shared/ui/avatar/Avatar.vue";
 import { useAnimeStore } from "@/shared/stores/store";
 
 const modalMenu = ref<boolean>(false);

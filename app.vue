@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { useAnimeStore } from "@/shared/stores/store";
-import { useGetUserSession } from "@/shared/composables/useGetUserSession";
-
-const store = useAnimeStore();
+import { useGetUser } from "@/shared/helpers/useGetUser";
 
 onMounted(async () => {
-  const result = await useGetUserSession();
-  store.user = result.data;
+  await useGetUser();
 });
 </script>
 
@@ -17,5 +13,3 @@ onMounted(async () => {
     <NuxtPage />
   </NuxtLayout>
 </template>
-
-

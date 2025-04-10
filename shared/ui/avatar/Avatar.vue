@@ -7,5 +7,5 @@ defineProps<{
 </script>
 
 <template>
-  <img :src="img ? `https://ivpfaitqeojbyulslqde.supabase.co/storage/v1/object/public/images/${img}` : user" class="rounded-[50%] cursor-pointer object-cover overflow-hidden" :class="classAvatar">
+  <img :src="img ? `https://ivpfaitqeojbyulslqde.supabase.co/storage/v1/object/public/images/${img}` : user" class="rounded-full cursor-pointer object-cover" :class="classAvatar">
 </template>
