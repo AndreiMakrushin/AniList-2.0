@@ -16,6 +16,11 @@ const goPageLK = () => {
 const userAvatar = computed(() => {
   return store.user?.avatar_url;
 });
+
+const logout = async () => {
+  await useLogout();
+  store.user = null;
+};
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const userAvatar = computed(() => {
         @click="goPageLK"
       />
 
-      <Button icon="exit" :width="20" :height="20" label="Выйти" @click="useLogout" />
+      <Button icon="exit" :width="20" :height="20" label="Выйти" @click="logout" />
     </ModalMenu>
   </div>
 </template>

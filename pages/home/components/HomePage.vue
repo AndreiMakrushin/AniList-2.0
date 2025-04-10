@@ -4,15 +4,12 @@ import {useRegister} from "@/shared/composables/useRegister" */
 import { useGetAnimeList } from "@/shared/composables/useGetAnimeList";
 import { useAnimeStore } from "@/shared/stores/store";
 import { addUniqueAnime } from "~/shared/helpers/addUniqueAnime";
-import AnimeCard from "~/shared/ui/anime-card";
+import AnimeCard from "~/shared/ui/card-anime";
 import AnimeGrid from "@/shared/components/anime-grid";
 
 const { aniList, page } = storeToRefs(useAnimeStore());
 
-/* const user = {
-  email: 'andrei18makrushin@gmail.com',
-  password: '12Apple2'
-}
+/* 
 
 const register = {
   name: 'Андрей',
@@ -20,16 +17,7 @@ const register = {
   password: '12Apple2'
 }
 
-const handleLogin = async () => {
-  const result = await useAuth(user)
-  
-  if (result.error) {
-
-    console.log('Auth failed:', result.error.message)
-  } else {
-    console.log('Logged in user:', result.data)
-  }
-} */
+*/
 
 /* const handleRegister = async () => {
   const result = await useRegister(register)
@@ -83,11 +71,13 @@ const goPageAnime = (code: string) => {
 
     <Spinner v-if="isLoading && aniList" />
 
-    <img
-      v-if="!aniList && !isLoading"
-      src="@/shared/assets/image/noAnime.png"
-      class="rounded-lg"
-    />
+    <div class="flex w-full h-full items-center justify-center">
+      <img
+        v-if="!aniList && !isLoading"
+        src="@/shared/assets/image/noAnime.png"
+        class="rounded-lg"
+      />
+    </div>
 
     <Button
       v-if="aniList && !isLoading"

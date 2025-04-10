@@ -46,6 +46,8 @@ const handleLogin = async () => {
           </div>
         </div>
       </div>
+
+      <span class="text-red-500 text-base leading-5">{{ error }}</span>
     </div>
   </div>
 </template>
