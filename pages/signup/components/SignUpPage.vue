@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>sign in</div>
+  <div>sign up</div>
 </template>
 
 <style scoped></style>
