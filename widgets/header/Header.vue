@@ -1,30 +1,13 @@
 <script setup lang="ts">
 import { useLogout } from "~/shared/composables/useLogout";
-import ModalMenu from "./components/modal-menu";
-import AnimeOnDemand from "./components/anime-on-demand/AnimeOnDemand.vue";
-import { useSearchAnime } from "~/shared/composables/useSearchAnime";
-import type { TAnime } from "~/shared/types";
-import { useDebounceFn } from "@vueuse/core";
+import ModalMenu from "@/shared/components/popup-menu";
+import AnimeBySearch from "./widgets/anime-by-search";
+
 import { useAnimeStore } from "@/shared/stores/store";
 
 const modalMenu = ref<boolean>(false);
-const searchAnime = ref<string>("");
-const arrayAnime = ref<TAnime[] | null>(null);
+
 const store = useAnimeStore();
-
-const debouncedSearch = useDebounceFn(async (query: string) => {
-  if (query.length > 3) {
-    arrayAnime.value = await useSearchAnime(query);
-  } else {
-    arrayAnime.value = null;
-  }
-}, 1000);
-
-const goPageAnime = (code: string) => {
-  navigateTo(`/anime/${code}`);
-  searchAnime.value = "";
-  arrayAnime.value = null;
-};
 
 const goPageLK = () => {
   navigateTo(`/lk/${store.user?.id}/История просмотра`);
@@ -37,8 +20,10 @@ const userAvatar = computed(() => {
 
 <template>
   <div class="flex w-[100%] sticky top-0 z-30">
-    <div class="flex flex-col w-full">
-      <div class="justify-between items-center flex px-4 py-2 w-full">
+    <div class="absolute inset-0 backdrop-blur-lg z-0"></div>
+
+    <div class="flex flex-col w-full relative z-10">
+      <div class="justify-between items-center flex px-5 py-5 w-full">
         <div class="flex flex-row gap-4 w-[60%]">
           <NuxtLink
             to="/"
@@ -46,37 +31,22 @@ const userAvatar = computed(() => {
             >AniList</NuxtLink
           >
 
-          <div class="relative flex flex-row grow gap-5">
-            <Search
-              v-model:model="searchAnime"
-              type="text"
-              class="focus:ring-cyan-300 bg-[#d8d8d8]"
-              @update:model="debouncedSearch"
-            />
-
-            <AnimeOnDemand
-              v-if="arrayAnime"
-              :array-anime="arrayAnime"
-              @go-page-anime="goPageAnime($event)"
-            />
-          </div>
+          <AnimeBySearch />
         </div>
 
         <main class="flex flex-row items-center gap-5">
           <!-- <Switch /> -->
 
           <Avatar
-            v-if="userAvatar"
+            v-if="store.user"
             class-avatar="w-[32px] h-[32px]"
             :img="userAvatar"
             @click="modalMenu = !modalMenu"
           />
 
-          <Button
-            v-if="!userAvatar"
-            label="Войти"
-            class-btn="p-0 font-medium text-gray-500"
-          />
+          <NuxtLink v-else class="p-0 font-medium text-white" to="/sign-in"
+            >Войти</NuxtLink
+          >
         </main>
       </div>
     </div>

@@ -4,7 +4,8 @@ import {useRegister} from "@/shared/composables/useRegister" */
 import { useGetAnimeList } from "@/shared/composables/useGetAnimeList";
 import { useAnimeStore } from "@/shared/stores/store";
 import { addUniqueAnime } from "~/shared/helpers/addUniqueAnime";
-import CardList from "~/shared/components/card-list/CardList.vue";
+import AnimeCard from "~/shared/ui/anime-card";
+import AnimeGrid from "@/shared/components/anime-grid";
 
 const { aniList, page } = storeToRefs(useAnimeStore());
 
@@ -62,20 +63,31 @@ const loadMore = async () => {
   page.value++;
   await fetchAndAddAnime();
 };
+
+const goPageAnime = (code: string) => {
+  navigateTo(`/anime/${code}`);
+};
 </script>
 
 <template>
   <div class="flex flex-col items-center pb-5 gap-3">
-    <div
-      v-if="aniList"
-      class="grid gap-[30px] p-[20px] 2xl:grid-cols-6 xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2"
-    >
-      <CardList :anime="aniList" />
-    </div>
+    <AnimeGrid
+      ><AnimeCard
+        v-for="(animeCard, index) in aniList"
+        :key="animeCard.id"
+        :anime="animeCard"
+        :style="{ 'transition-delay': `${index * 0.1}s` }"
+        @click="goPageAnime(animeCard.code)"
+      ></AnimeCard
+    ></AnimeGrid>
 
     <Spinner v-if="isLoading && aniList" />
 
-    <img v-if="!aniList && !isLoading" src="@/shared/assets/image/noAnime.png" class="rounded-lg" />
+    <img
+      v-if="!aniList && !isLoading"
+      src="@/shared/assets/image/noAnime.png"
+      class="rounded-lg"
+    />
 
     <Button
       v-if="aniList && !isLoading"
@@ -85,5 +97,3 @@ const loadMore = async () => {
     />
   </div>
 </template>
-
-<style scoped></style>

@@ -11,7 +11,7 @@ ssr: false,
     "@pinia/nuxt",
     "@primevue/nuxt-module"
   ],
-  css: ["primeicons/primeicons.css"],
+  css: ["./shared/assets/css/main.css","primeicons/primeicons.css"],
   primevue: {
     autoImport: true,
     options: {
