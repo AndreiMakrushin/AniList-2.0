@@ -3,7 +3,7 @@
     font-weight: 500;
     font-family: "Manrope";
 }
-
+\\
 @media (max-width: 1920px) and (min-width: 1150px) {
   html {
     font-size: calc(0.39866369710467703rem + 0.5010514571614699vw);
