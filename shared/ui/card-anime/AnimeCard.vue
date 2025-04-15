@@ -16,7 +16,7 @@ defineProps<{
       />
 
       <div
-        class="flex scrollbar flex-col gap-3 absolute z-10 top-0 p-4 overflow-y-auto left-0 w-full h-full hover:bg-cardOpacity hover:text-white duration-300 text-transparent"
+        class="flex scrollbar max-mobile:hidden flex-col gap-3 absolute z-10 top-0 p-4 overflow-y-auto left-0 w-full h-full hover:bg-cardOpacity hover:text-white duration-300 text-transparent"
       >
         <span>{{ anime?.description || "" }}</span>
         Дата выхода: {{ anime?.season.string || "" }} - {{ anime?.season.year || "" }}
