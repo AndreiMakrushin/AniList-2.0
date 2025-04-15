@@ -16,9 +16,11 @@
   "dependencies": {
     "@pinia/nuxt": "^0.9.0",
     "@primevue/themes": "^4.2.5",
+    "@vueup/vue-quill": "^1.2.0",
     "@vueuse/components": "^10.11.1",
     "@vueuse/core": "^10.11.1",
     "@vueuse/nuxt": "^10.11.1",
+    "chart.js": "^4.4.9",
     "nuxt": "^3.16.1",
     "pinia": "^2.3.0",
     "primeicons": "^7.0.0",

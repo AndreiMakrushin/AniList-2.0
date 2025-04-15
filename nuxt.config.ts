@@ -7,14 +7,12 @@ ssr: false,
 vite: {
   build: {
     rollupOptions: {
-      external: ['quill'],
-      output: {
-        globals: {
-          quill: 'Quill'
-        }
-      }
+      external: ['quill', 'chart.js/auto']
     }
   }
+},
+build: {
+  transpile: ['primevue', 'quill']
 },
 
   modules: [
