@@ -4,6 +4,19 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 ssr: false,
 
+vite: {
+  build: {
+    rollupOptions: {
+      external: ['quill'],
+      output: {
+        globals: {
+          quill: 'Quill'
+        }
+      }
+    }
+  }
+},
+
   modules: [
     "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
