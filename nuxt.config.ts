@@ -68,13 +68,13 @@ build: {
   },
   runtimeConfig:{
     public:{
-      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
-      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
-      animeList: process.env.NUXT_PUBLIC_ANIME_LIST,
-      animeSingle: process.env.NUXT_PUBLIC_ANIME_SINGLE,
-      animeSearch: process.env.NUXT_PUBLIC_ANIME_SEARCH,
-      animeSimilar: process.env.NUXT_PUBLIC_ANIME_SIMILAR,
-      animePoster: process.env.NUXT_PUBLIC_ANIME_POSTER
+      SUPABASE_URL: "",
+      SUPABASE_KEY: "",
+      ANIME_LIST: "",
+      ANIME_SINGLE: "",
+      ANIME_SEARCH: "",
+      ANIME_SIMILAR: "",
+      ANIME_POSTER: ""
     }
   },
   plugins: ["~/plugins/supabase.client"],

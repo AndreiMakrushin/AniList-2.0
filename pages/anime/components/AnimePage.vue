@@ -8,7 +8,7 @@ const anime = ref<TAnime | null>(null);
 
 const getAnimeForCode = async () => {
   const config = useRuntimeConfig();
-  const list = config.public.animeSingle;
+  const list = config.public.ANIME_SINGLE;
 
   try {
     const response = await fetch(`${list}${codeAnime}`);

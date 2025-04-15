@@ -2,7 +2,7 @@
 import AnimePage from "@/pages/anime";
 
 const config = useRuntimeConfig();
-const singleAnime = config.public.animeSingle;
+const singleAnime = config.public.ANIME_SINGLE;
 const route = useRoute();
 const code = route.params.id;
 

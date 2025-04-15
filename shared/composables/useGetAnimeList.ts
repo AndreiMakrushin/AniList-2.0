@@ -1,6 +1,6 @@
 export const useGetAnimeList = async(page: number) =>{
     const config = useRuntimeConfig()
-    const list = config.public.animeList
+    const list = config.public.ANIME_LIST
 
     try {
       const response = await fetch(`${list}${page}&limit=10`);
