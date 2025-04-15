@@ -30,6 +30,7 @@ ssr: false,
     components: {
       exclude: ['Form', 'FormField'],
       include: "*",
+      prefix: "Prime"
     },
   },
   app: {
