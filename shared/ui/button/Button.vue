@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
     label: string,
+    disabled?: boolean
     classBtn?: string
     icon?: string,
     width?: number,
@@ -9,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-  <button type="button" :class="classBtn" class="flex flex-row gap-2 w-full duration-short">
+  <button type="button" :disabled="disabled" :class="{'bg-slate-400': disabled}" class="flex flex-row gap-2 w-full rounded-lg duration-short">
   <SvgSprite v-if="icon" :icon="icon" :width="width" :height="height" />
     {{ label }}
   </button>
