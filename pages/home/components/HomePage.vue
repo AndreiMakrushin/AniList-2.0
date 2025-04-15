@@ -1,6 +1,4 @@
 <script setup lang="ts">
-/* import { useAuth } from "@/shared/composables/useAuth"
-import {useRegister} from "@/shared/composables/useRegister" */
 import { useGetAnimeList } from "@/shared/composables/useGetAnimeList";
 import { useAnimeStore } from "@/shared/stores/store";
 import { addUniqueAnime } from "~/shared/helpers/addUniqueAnime";
@@ -8,27 +6,6 @@ import AnimeCard from "~/shared/ui/card-anime";
 import AnimeGrid from "@/shared/components/anime-grid";
 
 const { aniList, page } = storeToRefs(useAnimeStore());
-
-/* 
-
-const register = {
-  name: 'Андрей',
-  email: 'andrei18maffkrushin@gmail.com',
-  password: '12Apple2'
-}
-
-*/
-
-/* const handleRegister = async () => {
-  const result = await useRegister(register)
-
-  if (result.error) {
-
-    console.log('Register failed:', result.error.message)
-  }else{
-    console.log('Registered user:', result.data)
-  }
-} */
 
 const isLoading = ref(false);
 
