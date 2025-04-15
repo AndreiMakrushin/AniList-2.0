@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useLogout } from "~/shared/composables/useLogout";
-import ModalMenu from "@/shared/components/popup-menu";
+import MenuLayout from "~/shared/components/layouts/menu-layout";
 import AnimeBySearch from "./widgets/anime-by-search";
 import Avatar from "~/shared/ui/avatar/Avatar.vue";
 import { useAnimeStore } from "@/shared/stores/store";
-
-const modalMenu = ref<boolean>(false);
+import  PopperMenu  from "@/shared/ui/poppers/popper-menu/PopperMenu.vue";
 
 const store = useAnimeStore();
 
@@ -39,40 +38,55 @@ const logout = async () => {
           <AnimeBySearch />
         </div>
 
-        <main class="flex flex-row items-center gap-5">
-          <!-- <Switch /> -->
+        <PopperMenu>
+          <template #popper-menu-head="{ openMenu }"
+            ><div class="flex flex-row items-center gap-5">
 
-          <Avatar
-            v-if="store.user"
-            class-avatar="w-[32px] h-[32px]"
-            :img="userAvatar"
-            @click="modalMenu = !modalMenu"
-          />
+              <Avatar
+                v-if="store.user"
+                class-avatar="w-[32px] h-[32px]"
+                :img="userAvatar"
+                @click="openMenu"
+              />
 
-          <NuxtLink v-else class="p-0 font-medium text-white" to="/sign-in"
-            >Войти</NuxtLink
+              <NuxtLink v-else class="p-0 font-medium text-white" to="/sign-in"
+                >Войти</NuxtLink
+              >
+            </div></template
           >
-        </main>
+
+          <template #popper-menu-body="{ closeMenu }"
+            ><MenuLayout
+              class="right-[20px] top-[100%] text-[14px]"
+              @click="closeMenu"
+            >
+              <Button
+                icon="icon-user"
+                :width="20"
+                :height="20"
+                :label="store.user?.name!"
+                class="cursor-default"
+              />
+
+              <Button
+                icon="icon-settings"
+                :width="20"
+                :height="20"
+                label="Мой Профиль"
+                @click="goPageLK"
+              />
+
+              <Button
+                icon="exit"
+                :width="20"
+                :height="20"
+                label="Выйти"
+                @click="logout"
+              /> </MenuLayout
+          ></template>
+        </PopperMenu>
       </div>
     </div>
-
-    <ModalMenu
-      v-if="modalMenu"
-      class="right-[20px] top-[100%] text-[14px]"
-      @click="modalMenu = false"
-    >
-      <Button icon="icon-user" :width="20" :height="20" :label="store.user?.name!" />
-
-      <Button
-        icon="icon-settings"
-        :width="20"
-        :height="20"
-        label="Мой Профиль"
-        @click="goPageLK"
-      />
-
-      <Button icon="exit" :width="20" :height="20" label="Выйти" @click="logout" />
-    </ModalMenu>
   </div>
 </template>
 
