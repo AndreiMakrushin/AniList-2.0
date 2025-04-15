@@ -3,16 +3,20 @@ import { vOnClickOutside } from "@vueuse/components";
 
 const menu = ref(false);
 
-const stateMenu = () => {
-  menu.value = !menu.value;
+const closeMenu = () => {
+  menu.value = false;
+};
+
+const openMenu = () => {
+  menu.value = true;
 };
 </script>
 
 <template>
-  <div v-on-click-outside="stateMenu" class="flex flex-col gap-5">
-    <slot name="popper-menu-head" :open-menu="stateMenu" @click="stateMenu"></slot>
+  <div v-on-click-outside="closeMenu" class="flex flex-col gap-5">
+    <slot name="popper-menu-head" :open-menu="openMenu" @openDrop="openMenu"></slot>
 
-    <slot v-if="menu" :close-menu="stateMenu" name="popper-menu-body" @click="stateMenu"></slot>
+    <slot v-if="menu" :close-menu="closeMenu" name="popper-menu-body" @closeDrop="closeMenu"></slot>
   </div>
 </template>
 
