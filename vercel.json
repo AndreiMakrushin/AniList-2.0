@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "nuxt.config.ts",
+        "use": "@nuxtjs/vercel-builder",
+        "config": {
+          "serverFiles": ["server/**/*"]
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/_nuxt/.+",
+        "headers": {
+          "Cache-Control": "public,max-age=31536000,immutable"
+        }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ],
+    "env": {
+      "SUPABASE_URL": "@supabase_url",
+      "SUPABASE_KEY": "@supabase_key",
+      "NUXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+      "NUXT_PUBLIC_SUPABASE_KEY": "@supabase_key"
+    }
+  }
