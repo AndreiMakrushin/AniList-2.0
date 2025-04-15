@@ -19,7 +19,7 @@ export const useSupabaseAuth = () => {
         },
 
         getUserFromTable: async (email: string) => {
-            const { data, error } = await $supabase
+            const { data, error  } = await $supabase
             .from('users')
             .select<string, IUser>()
             .eq('email', email)
