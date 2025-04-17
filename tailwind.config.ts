@@ -28,6 +28,17 @@ export default <Partial<Config>>{
     backgroundColor: {
         'cardOpacity': 'rgba(0, 0, 0, 0.8)',
         'cardOpacity2': 'rgba(0, 0, 0, 0.3)'
+    },animation: {
+      shimmer: 'shimmer 2s infinite linear',
+    },
+    keyframes: {
+      shimmer: {
+        '0%': { 'background-position': '-200% 0' },
+        '100%': { 'background-position': '200% 0' },
+      },
+    },
+    backgroundSize: {
+      '200%': '200% 100%',
     }
       
     },

@@ -36,15 +36,17 @@ const goPageAnime = (code: string) => {
 
 <template>
   <div class="flex flex-col items-center pb-5 gap-3">
-    <AnimeGrid
-      ><AnimeCard
+    <AnimeGrid v-if="aniList">
+      <AnimeCard
         v-for="(animeCard, index) in aniList"
         :key="animeCard.id"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
         @click="goPageAnime(animeCard.code)"
-      ></AnimeCard
-    ></AnimeGrid>
+      ></AnimeCard>
+    </AnimeGrid>
+
+    <AnimeGrid ><AnimeGridSkeleton v-for="i in 10" :key="i" /> </AnimeGrid>
 
     <Spinner v-if="isLoading && aniList" />
 
