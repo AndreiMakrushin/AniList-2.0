@@ -46,7 +46,7 @@ const goPageAnime = (code: string) => {
       ></AnimeCard>
     </AnimeGrid>
 
-    <AnimeGrid ><AnimeGridSkeleton v-for="i in 10" :key="i" /> </AnimeGrid>
+    <AnimeGrid v-else><AnimeGridSkeleton v-for="i in 10" :key="i" /> </AnimeGrid>
 
     <Spinner v-if="isLoading && aniList" />
 
