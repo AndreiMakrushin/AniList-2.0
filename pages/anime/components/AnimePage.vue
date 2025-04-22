@@ -151,7 +151,7 @@ const lastUpdate = computed(() => {
           </div>
         </div>
       </div>
-
+{{ console.log(anime) }}
       player
     </div>
   </div>

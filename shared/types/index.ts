@@ -69,8 +69,27 @@ export interface IUser {
       length: number;
     };
   }
+
+  interface IHls{
+    fhd: string;
+    hd: string;
+    sd: string;
+  }
+
+  export interface IEpisode {
+    created_timestamp: number;
+    episode: number;
+    hls: {[key: string]: IHls};
+    name: string;
+    preview: string;
+    skips: {
+      ending: []; // или `ending: Array<SkipSegment>`, если есть тип для сегментов
+      opening: [];
+      uuid: string;
+    };
+  }
   
-  interface IAnimePlayer {
+  export interface IAnimePlayer {
     player: {
       alternative_player: string | null;
       episodes: {
@@ -79,22 +98,7 @@ export interface IUser {
         string: string;
       };
       host: string | null;
-      list: {
-        created_timestamp: number;
-        episode: number;
-        hls: {
-          fhd: string;
-          hd: string;
-          sd: string;
-        };
-        name: string;
-        preview: string;
-        skips: {
-          ending: [];
-          opening: [];
-          uuid: string;
-        };
-      };
+      list: {[key: string]: IEpisode};
       rutube: object;
     };
   }
