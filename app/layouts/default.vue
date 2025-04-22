@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import Header from "@/widgets/header";
-
 </script>
 
 <template>
-    <div class="image">
-        <Header />
+  <div class="image">
+    <Header class="px-[5%] max-pads:px-0" />
 
-        <slot/>
-    </div>
+    <div class="px-[5%] max-pads:px-0"><slot /></div>
+  </div>
 </template>
 
 <style scoped>

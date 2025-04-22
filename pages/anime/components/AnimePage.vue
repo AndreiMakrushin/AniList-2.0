@@ -31,7 +31,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>{{ anime }}</div>
+  <div class="p-5">{{ anime }}</div>
 </template>
 
 <style scoped></style>
