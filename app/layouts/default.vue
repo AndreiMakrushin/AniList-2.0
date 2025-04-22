@@ -3,15 +3,15 @@ import Header from "@/widgets/header";
 </script>
 
 <template>
-  <div class="image">
-    <Header class="px-[5%] max-pads:px-0" />
+  <div class="app-layout">
+    <Header />
 
-    <div class="px-[5%] max-pads:px-0"><slot /></div>
+    <div class="max-w-[1440px] mx-auto"><slot /></div>
   </div>
 </template>
 
 <style scoped>
-.image {
+.app-layout {
   background-image: url("@/shared/public/images/bg.jpg");
   position: relative;
   background-size: cover;
@@ -19,5 +19,6 @@ import Header from "@/widgets/header";
   background-repeat: no-repeat;
   height: 100vh;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 </style>
