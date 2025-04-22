@@ -57,7 +57,9 @@ export interface IUser {
       string: string;
       code: number;
     };
-    team: object;
+    team: {
+      voice: string[]
+    };
     torrents: object;
     type: {
       code: number;
