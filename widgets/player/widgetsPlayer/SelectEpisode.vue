@@ -3,7 +3,7 @@ const emit = defineEmits<{
   (e: "update", event: number): void;
 }>();
 defineProps<{
-  episodes: number;
+  episode: number;
   selected: number;
 }>();
 const isOpen = ref<boolean>(false);
@@ -28,7 +28,7 @@ const close = (event: number) => {
       class="flex flex-col max-h-[180px] overflow-y-auto w-full border-t-1 border-white rounded-[5px] bg-gray-500 mt-1 scrollBar"
     >
       <p
-        v-for="e in episodes"
+        v-for="e in episode"
         :key="e"
         class="cursor-pointer hover:bg-gray-700 px-1 duration-short"
         @click="close(e)"

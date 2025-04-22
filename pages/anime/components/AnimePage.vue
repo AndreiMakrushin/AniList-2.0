@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TAnime } from "@/shared/types";
+import Player from "~/widgets/player/Player.vue";
 const route = useRoute();
 
 const codeAnime = route.params.id;
@@ -151,8 +152,12 @@ const lastUpdate = computed(() => {
           </div>
         </div>
       </div>
-{{ console.log(anime) }}
-      player
+      {{ console.log(anime?.player) }}
+      <Player
+        :anime-play="anime?.player"
+        preview-url="https://dl-20211030-963.anilib.top"
+        seria-url="https://cache.libria.fun"
+      />
     </div>
   </div>
 </template>

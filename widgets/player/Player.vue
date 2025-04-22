@@ -6,21 +6,21 @@ import Preview from "./widgetsPlayer/Preview.vue";
 import ProgressBar from "./widgetsPlayer/ProgressBar.vue";
 import Controllers from "./widgetsPlayer/Controllers.vue";
 import type { IAnimePlayer, IUser } from "@/shared/types";
-import noImg from "@/assets/image/noImg.png";
+import noImg from "@/shared/assets/image/noAnime.png";
 import { useScreenShooter } from "@/shared/helpers/useScreenShooter";
 import QualityVideo from "./widgetsPlayer/QualityVideo.vue";
 
 const props = defineProps<{
   user?: IUser;
   episode?: number | undefined;
-  animePlay?: IAnimePlayer;
+  animePlay: IAnimePlayer | undefined;
   animeName?: string;
   animeId?: number;
   previewUrl?: string;
   seriaUrl?: string;
 }>();
 
-const episodeAnime = ref<number>(1);
+const episodeAnime = ref<number>(props.episode || 1);
 const quality = ref<string>("hd");
 const timer = ref<number>(0);
 const fullscreen = ref<boolean>(false);
@@ -32,14 +32,14 @@ const showInterface = ref<boolean>(false);
 
 const previewAnime = computed(() => {
   return (
-    `${props.previewUrl}${props.animePlay?.player?.list[episodeAnime.value].preview}` ||
+    `${props.previewUrl}${props.animePlay?.list[episodeAnime.value].preview}` ||
     noImg
   );
 });
 
 const seria = computed(() => {
   return `${props.seriaUrl}${
-    props.animePlay?.player?.list[episodeAnime.value].hls[quality.value]
+    props.animePlay?.list[episodeAnime.value].hls[quality.value]
   }`;
 });
 
@@ -75,7 +75,7 @@ watch([props, episodeAnime, quality], () => {
   resetParameters();
 });
 
-const updateEpisode = (event: string) => {
+const updateEpisode = (event: number) => {
   console.log(event);
 
   /* emit("updateEpisode", Number(event)); */
@@ -128,7 +128,7 @@ const videoDuration = computed(() => {
   return videoTimer(time);
 });
 const nextEpisode = () => {
-  if (episodeAnime.value === props.animePlay?.player?.episodes?.last) {
+  if (episodeAnime.value === props.animePlay?.episodes?.last) {
     episodeAnime.value = 0;
   }
   episodeAnime.value++;
@@ -318,7 +318,7 @@ onUnmounted(() => {
 
     <SelectEpisode
       class="absolute top-2 right-2"
-      :episodes="props.animePlay?.player?.list.length"
+      :episode="props.animePlay?.episodes.last!"
       :selected="episodeAnime"
       @update="updateEpisode($event)"
     />
@@ -368,7 +368,7 @@ onUnmounted(() => {
     >
       <QualityVideo
         :quality="quality"
-        :anime-quality="props.animePlay?.player.list[episodeAnime]?.hls"
+        :anime-quality="props.animePlay?.list[episodeAnime]?.hls || {}"
         @update-quality="updateQuality($event)"
       />
     </div>

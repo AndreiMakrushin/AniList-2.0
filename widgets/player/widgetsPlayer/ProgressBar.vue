@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, watch, ref, computed } from 'vue'
+
+const emit = defineEmits(['rewind'])
 
 const props = defineProps<{
   videoCurrentTime?: number
   videoDurationTime?: number
   style?: object | undefined
 }>()
-
-const emit = defineEmits(['rewind'])
 
 const progress = computed(() => {
   if (!props.videoDurationTime || !props.videoCurrentTime) return
@@ -40,13 +39,14 @@ const ranges = computed({
       class="absolute z-10 h-full duration-short bg-slate-500 rounded-[5px] cursor-pointer justify-end items-center"
       :style="progress"
     ></div>
+
     <input
+      v-model="ranges"
       type="range"
       class="w-full absolute z-20 h-full"
       step="1"
       min="0"
       max="1000"
-      v-model="ranges"
     />
   </div>
 </template>

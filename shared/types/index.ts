@@ -46,6 +46,7 @@ export interface IUser {
     franchises: [];
     genres: [];
     in_favorites: number;
+    player: IAnimePlayer;
     last_change: number;
     names: {
       en: string;
@@ -70,7 +71,7 @@ export interface IUser {
     };
   }
 
-  interface IHls{
+  export interface IHls{
     fhd: string;
     hd: string;
     sd: string;
@@ -90,7 +91,7 @@ export interface IUser {
   }
   
   export interface IAnimePlayer {
-    player: {
+    
       alternative_player: string | null;
       episodes: {
         first: number;
@@ -99,8 +100,7 @@ export interface IUser {
       };
       host: string | null;
       list: {[key: string]: IEpisode};
-      rutube: object;
-    };
+    
   }
   
   interface IAnimePosters {
@@ -117,4 +117,4 @@ export interface IUser {
     };
   }
   
- export type TAnime = IAnimeBase & IAnimePlayer & IAnimePosters;
+ export type TAnime = IAnimeBase & IAnimePosters;
