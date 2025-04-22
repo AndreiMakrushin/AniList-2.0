@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import type { TAnime } from "@/shared/types";
+import type { IAnimeCard } from "@/shared/types";
 
 defineProps<{
-  anime: TAnime;
+  anime: IAnimeCard;
 }>();
 </script>
 
@@ -11,7 +11,7 @@ defineProps<{
   <article class="flex flex-col items-center gap-3 cursor-pointer">
     <div class="relative z-0 rounded-[15px] overflow-hidden">
       <img
-        :src="`https://dl-20240330-7.anilib.moe${anime?.posters.original.url}`"
+        :src="`https://dl-20240330-7.anilib.moe${anime?.poster}`"
         class="w-full h-auto"
       />
 

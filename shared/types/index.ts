@@ -15,6 +15,23 @@ export interface IUser {
     email: string
     password: string
   }
+  interface ISeason {
+    string: string
+    code: number
+    year: number
+    week_day: number
+  }
+  export interface IAnimeCard{
+    id: number
+    code: string
+    names: {
+      en: string
+      ru: string
+    }
+    poster: string
+    description: string
+    season: ISeason
+  }
 
   export type TUserResponse<T = unknown> = 
   | { data: T; error: null }
@@ -26,11 +43,6 @@ export interface IUser {
     description: string;
     updated: number;
     announce: string | null;
-    blocked: {
-      copyrights: boolean;
-      geoip: boolean;
-      geoip_list: [];
-    };
     franchises: [];
     genres: [];
     in_favorites: number;
@@ -40,12 +52,7 @@ export interface IUser {
       ru: string;
       alternative: string | null;
     };
-    season: {
-      string: string;
-      code: number;
-      year: number;
-      week_day: number;
-    };
+    season: ISeason;
     status: {
       string: string;
       code: number;
@@ -70,7 +77,6 @@ export interface IUser {
         string: string;
       };
       host: string | null;
-      is_rutube: boolean;
       list: {
         created_timestamp: number;
         episode: number;
