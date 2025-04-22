@@ -26,8 +26,8 @@ const logout = async () => {
   <div class="flex w-[100%] sticky top-0 z-30">
     <div class="absolute inset-0 backdrop-blur-lg z-0"></div>
 
-    <div class="flex flex-col max-w-[1440px] grow mx-auto relative z-10">
-      <div class="justify-between items-center flex px-5 py-5 w-full">
+    <div class="flex flex-col max-w-[1440px] max-pads:px-5 grow mx-auto relative z-10">
+      <div class="justify-between items-center flex max-pads:px-0 px-5 py-5 max-pads:py-3 w-full">
         <div class="flex flex-row gap-4 w-[60%]">
           <NuxtLink
             to="/"
@@ -35,7 +35,7 @@ const logout = async () => {
             >AniList</NuxtLink
           >
 
-          <AnimeBySearch />
+          <AnimeBySearch class="max-pads:hidden" />
         </div>
 
         <PopperMenu>
@@ -57,7 +57,7 @@ const logout = async () => {
 
           <template #popper-menu-body="{ closeMenu }"
             ><MenuLayout
-              class="right-[20px] top-[100%] text-[14px]"
+              class="right-[20px] translate-y-[calc(100%-10px)] max-pads:translate-y-[calc(100%-25px)] bottom-0 text-[14px]"
               @click="closeMenu"
             >
               <Button
@@ -86,6 +86,8 @@ const logout = async () => {
           ></template>
         </PopperMenu>
       </div>
+
+      <AnimeBySearch class="hidden max-pads:flex" />
     </div>
   </div>
 </template>
