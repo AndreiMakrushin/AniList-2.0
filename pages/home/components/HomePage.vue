@@ -36,7 +36,7 @@ const goPageAnime = (code: string) => {
 
 <template>
   <div class="flex flex-col items-center pb-5 gap-3">
-    <AnimeGrid v-if="aniList">
+    <AnimeGrid>
       <AnimeCard
         v-for="(animeCard, index) in aniList"
         :key="animeCard.id"
@@ -44,10 +44,12 @@ const goPageAnime = (code: string) => {
         :style="{ 'transition-delay': `${index * 0.1}s` }"
         @click="goPageAnime(animeCard.code)"
       ></AnimeCard>
-    </AnimeGrid>
 
-    <AnimeGrid v-if="isLoading"
-      ><AnimeGridSkeleton v-for="i in aniList?.length ? 5 : 10" :key="i" />
+      <AnimeGridSkeleton 
+      v-for="i in aniList?.length ? 5 : 10" 
+      v-show="isLoading"
+      :key="'skeleton-'+i"
+    />
     </AnimeGrid>
 
     <div class="flex w-full h-full items-center justify-center">
