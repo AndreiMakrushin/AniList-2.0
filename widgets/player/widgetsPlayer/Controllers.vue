@@ -28,6 +28,8 @@ defineProps<{
       <SvgSprite
         class="cursor-pointer"
         icon="icon-prev"
+        :width="20"
+        :height="20"
         @click.stop="emit('prevEpisode')"
       />
 
@@ -35,6 +37,8 @@ defineProps<{
         v-if="playing"
         class="cursor-pointer"
         icon="icon-pause"
+        :width="20"
+        :height="20"
         @click.stop="emit('videoPaused')"
       />
 
@@ -42,12 +46,16 @@ defineProps<{
         v-if="!playing"
         class="cursor-pointer"
         icon="icon-play-small"
+        :width="20"
+        :height="20"
         @click.stop="emit('playVideo')"
       />
 
       <SvgSprite
         class="cursor-pointer"
         icon="icon-next"
+        :width="20"
+        :height="20"
         @click.stop="emit('nextEpisode')"
       />
 
@@ -58,6 +66,8 @@ defineProps<{
 
       <SvgSprite
         icon="icon-screenShot"
+        :width="20"
+        :height="20"
         class="cursor-pointer"
         @click.stop="emit('screenShot')"
       />
@@ -66,6 +76,8 @@ defineProps<{
     <div class="flex flex-row gap-3">
       <SvgSprite
         icon="icon-settings"
+        :width="20"
+        :height="20"
         class="hover:rotate-[60deg] duration-short cursor-pointer"
         @click.stop="emit('openSelectQuality')"
       />
@@ -73,6 +85,8 @@ defineProps<{
       <SvgSprite
         v-if="!fullscreen"
         icon="icon-fullScreen"
+        :width="20"
+        :height="20"
         class="hover:scale-110 duration-short cursor-pointer"
         @click="emit('fullScreen')"
       />
@@ -80,6 +94,8 @@ defineProps<{
       <SvgSprite
         v-else
         icon="icon-smallScreen"
+        :width="20"
+        :height="20"
         class="hover:scale-20 duration-short cursor-pointer"
         @click="emit('normalScreen')"
       />
