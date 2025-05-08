@@ -23,7 +23,11 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center">
+  <div class="min-h-screen flex relative items-center">
+  <img
+        src="@/shared/assets/image/greeting.png"
+        class="absolute h-full max-pads:hidden right-10">
+
     <div class="flex flex-col gap-10 items-center max-pads:p-4 w-full">
       <h1 class="text-5xl max-pads:text-3xl text-center">Добро пожаловать в AniList</h1>
 
