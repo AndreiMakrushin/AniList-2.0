@@ -24,7 +24,7 @@ const props = defineProps<{
 
 const { addAnimeToHistory } = useSupabaseAnime();
 
-const episodeAnime = ref<number>(props.episode || 1);
+const episodeAnime = ref<number>(props.episode!);
 const quality = ref<string>("hd");
 const timer = ref<number>(0);
 const fullscreen = ref<boolean>(false);
@@ -71,7 +71,6 @@ function resetParameters() {
 
   if (videoElement.value) {
     timer.value = 0;
-    episodeAnime.value = props.episode || 1;
     videoElement.value.currentTime = 0;
   }
 }
@@ -81,14 +80,16 @@ watch([props, episodeAnime, quality], () => {
 });
 
 const updateEpisode = (event: number) => {
-  console.log(event);
+  resetParameters();
+  episodeAnime.value = event;
 
   /* emit("updateEpisode", Number(event)); */
 };
 const playVideo = () => {
   if (!videoElement.value) return;
-
+  
   if (props.user) {
+    
     addAnimeToHistory(
       props.user.id,
       videoElement.value,

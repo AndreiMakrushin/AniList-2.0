@@ -2,35 +2,14 @@
 import type { TAnime } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
-const route = useRoute();
 
-const codeAnime = route.params.id;
+const props = defineProps<{
+  episode: string;
+  anime: TAnime;
+}>();
 
-const anime = ref<TAnime | null>(null);
+const anime = ref<TAnime | null>(props.anime);
 const store = storeToRefs(useAnimeStore());
-
-const getAnimeForCode = async () => {
-  const config = useRuntimeConfig();
-  const list = config.public.ANIME_SINGLE;
-
-  try {
-    const response = await fetch(`${list}${codeAnime}`);
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-
-    return (anime.value = data);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-onMounted(async () => {
-  await getAnimeForCode();
-});
 
 const lastUpdate = computed(() => {
   const date = new Date((anime.value?.updated as number) * 1000);
@@ -160,6 +139,7 @@ const lastUpdate = computed(() => {
         :anime-id="anime?.id"
         :anime-name="anime?.names.ru"
         :user="store.user.value"
+        :episode="+episode"
         preview-url="https://dl-20211030-963.anilib.top"
         seria-url="https://cache.libria.fun"
       />
