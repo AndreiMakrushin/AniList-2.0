@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { TAnime } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
+import { useAnimeStore } from "@/shared/stores/store";
 const route = useRoute();
 
 const codeAnime = route.params.id;
 
 const anime = ref<TAnime | null>(null);
+const store = storeToRefs(useAnimeStore());
 
 const getAnimeForCode = async () => {
   const config = useRuntimeConfig();
@@ -43,7 +45,7 @@ const lastUpdate = computed(() => {
 <template>
   <div class="w-full flex flex-row gap-5 p-4 text-white">
     <!-- Левая колонка (постер) -->
-    <div class="w-full md:w-[300px] flex-shrink-0 flex flex-col gap-5">
+    <div class="w-full md:w-[300px] max-pads:hidden flex-shrink-0 flex flex-col gap-5">
       <div class="relative aspect-[2/3] rounded-xl overflow-hidden bg-gray-800/50">
         <img
           class="w-full h-full object-cover transition-opacity duration-300"
@@ -152,9 +154,12 @@ const lastUpdate = computed(() => {
           </div>
         </div>
       </div>
-      {{ console.log(anime?.player) }}
+
       <Player
         :anime-play="anime?.player"
+        :anime-id="anime?.id"
+        :anime-name="anime?.names.ru"
+        :user="store.user.value"
         preview-url="https://dl-20211030-963.anilib.top"
         seria-url="https://cache.libria.fun"
       />

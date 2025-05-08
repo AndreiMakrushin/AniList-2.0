@@ -23,7 +23,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-row items-center justify-between">
+  <div class="flex flex-row items-center justify-between py-1">
     <div class="flex flex-row gap-2 items-center">
       <SvgSprite
         class="cursor-pointer"

@@ -6,6 +6,16 @@ export interface IUser {
     avatar_url: string
   }
 
+  export interface IAddAnime {
+    animeId: number;
+    userId: string;
+    current_Time: number;
+    duration_Time: number;
+    nameAnime: string;
+    img: string | null;
+    episode: number;
+  }
+
  export interface IRegisterForm {
     name: string
     email: string
@@ -84,7 +94,7 @@ export interface IUser {
     name: string;
     preview: string;
     skips: {
-      ending: []; // или `ending: Array<SkipSegment>`, если есть тип для сегментов
+      ending: [];
       opening: [];
       uuid: string;
     };

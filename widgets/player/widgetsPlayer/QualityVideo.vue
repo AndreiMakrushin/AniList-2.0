@@ -17,7 +17,7 @@ const updateQuality = (event: string) => {
 </script>
 
 <template>
-  <ol class="flex gap-2">
+  <ol class="flex flex-col gap-2">
     <li
       v-for="(q, key) in animeQuality"
       :key="key"
