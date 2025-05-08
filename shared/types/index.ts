@@ -6,6 +6,16 @@ export interface IUser {
     avatar_url: string
   }
 
+  export interface IAddAnime {
+    animeId: number;
+    userId: string;
+    current_Time: number;
+    duration_Time: number;
+    nameAnime: string;
+    img: string | null;
+    episode: number;
+  }
+
  export interface IRegisterForm {
     name: string
     email: string
@@ -46,6 +56,7 @@ export interface IUser {
     franchises: [];
     genres: [];
     in_favorites: number;
+    player: IAnimePlayer;
     last_change: number;
     names: {
       en: string;
@@ -57,7 +68,9 @@ export interface IUser {
       string: string;
       code: number;
     };
-    team: object;
+    team: {
+      voice: string[]
+    };
     torrents: object;
     type: {
       code: number;
@@ -67,9 +80,28 @@ export interface IUser {
       length: number;
     };
   }
+
+  export interface IHls{
+    fhd: string;
+    hd: string;
+    sd: string;
+  }
+
+  export interface IEpisode {
+    created_timestamp: number;
+    episode: number;
+    hls: {[key: string]: IHls};
+    name: string;
+    preview: string;
+    skips: {
+      ending: [];
+      opening: [];
+      uuid: string;
+    };
+  }
   
-  interface IAnimePlayer {
-    player: {
+  export interface IAnimePlayer {
+    
       alternative_player: string | null;
       episodes: {
         first: number;
@@ -77,24 +109,8 @@ export interface IUser {
         string: string;
       };
       host: string | null;
-      list: {
-        created_timestamp: number;
-        episode: number;
-        hls: {
-          fhd: string;
-          hd: string;
-          sd: string;
-        };
-        name: string;
-        preview: string;
-        skips: {
-          ending: [];
-          opening: [];
-          uuid: string;
-        };
-      };
-      rutube: object;
-    };
+      list: {[key: string]: IEpisode};
+    
   }
   
   interface IAnimePosters {
@@ -111,4 +127,4 @@ export interface IUser {
     };
   }
   
- export type TAnime = IAnimeBase & IAnimePlayer & IAnimePosters;
+ export type TAnime = IAnimeBase & IAnimePosters;

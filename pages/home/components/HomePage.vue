@@ -30,7 +30,8 @@ const loadMore = async () => {
 };
 
 const goPageAnime = (code: string) => {
-  navigateTo(`/anime/${code}`);
+  navigateTo(`/anime/${code}/1`);
+  
 };
 </script>
 

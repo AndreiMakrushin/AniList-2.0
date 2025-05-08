@@ -4,7 +4,9 @@ import AnimePage from "@/pages/anime";
 const config = useRuntimeConfig();
 const singleAnime = config.public.ANIME_SINGLE;
 const route = useRoute();
-const code = route.params.id;
+const code = route.params.code;
+const episode = route.params.episode as string;
+
 
 const { data: anime } = await useAsyncData(`anime-${code}`, async () => {
   try {
@@ -22,7 +24,7 @@ useHead({
 </script>
 
 <template>
-  <AnimePage />
+  <AnimePage :anime="anime" :episode="episode"/>
 </template>
 
-<style scoped></style>
+<style scoped></style>з
