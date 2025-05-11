@@ -19,6 +19,10 @@ const lastUpdate = computed(() => {
 
   return `${day}.${month}.${year}`;
 });
+
+const currentEpisodeList = computed(() => {
+  return Object.keys(anime.value?.player?.list || {}).length || "0";
+});
 </script>
 
 <template>
@@ -110,7 +114,7 @@ const lastUpdate = computed(() => {
             <div class="flex flex-wrap gap-1">
               <span class="text-gray-400">Эпизоды:</span>
 
-              <span class="text-white">{{ anime?.type.length || "0" }}</span>
+              <span class="text-white">{{ currentEpisodeList }}</span>
 
               <span class="text-gray-400">из</span>
 

@@ -40,7 +40,7 @@ const goPageAnime = (code: string) => {
       v-if="!aniList && !isLoading"
       class="flex w-full h-full items-center justify-center"
     >
-      <img src="@/shared/assets/image/noAnime.png" class="rounded-lg" />
+      <img src="@/shared/assets/image/noAnime.png" class="rounded-lg max-h-[500px]" />
     </div>
 
     <AnimeGrid v-else>
@@ -51,13 +51,9 @@ const goPageAnime = (code: string) => {
         :style="{ 'transition-delay': `${index * 0.1}s` }"
         @click="goPageAnime(animeCard.code)"
       ></AnimeCard>
-
-      <!-- <AnimeGridSkeleton 
-      v-for="i in aniList?.length ? 5 : 10" 
-      v-show="isLoading"
-      :key="'skeleton-'+i"
-    /> -->
     </AnimeGrid>
+
+    <Spinner v-if="aniList && isLoading" />
 
     <Button
       v-if="aniList && !isLoading"

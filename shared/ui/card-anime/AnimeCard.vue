@@ -11,54 +11,57 @@ const imgRef = ref<HTMLImageElement | null>(null);
 
 onMounted(() => {
   if (imgRef.value && props.anime?.poster) {
+    if (imgRef.value.complete) {
+      isImageLoaded.value = true;
+      return;
+    }
+
     imgRef.value.onload = () => {
       isImageLoaded.value = true;
     };
     imgRef.value.onerror = () => {
       isImageLoaded.value = false;
     };
-    if (imgRef.value.complete) {
-      isImageLoaded.value = true;
-    }
   }
 });
 </script>
 
 <template>
-  <article class="flex flex-col items-center gap-3 cursor-pointer">
-    <div class="relative z-0 h-full rounded-[15px] w-full">
+  <article class="flex flex-col items-center gap-3 cursor-pointer w-full" :class="{ 'pointer-events-none': !isImageLoaded }">
+    <div class="relative w-full aspect-[3/4.248] rounded-[15px] overflow-hidden">
       <div
-        v-show="!isImageLoaded || !anime?.poster"
-        class="w-full h-[90%] rounded-[15px] bg-gray-200 dark:bg-gray-700 relative overflow-hidden before:absolute before:inset-0 before:w-full before:h-full before:bg-[length:200%_100%] before:bg-gradient-to-r before:from-gray-200 before:via-gray-300 before:to-gray-200 dark:before:from-gray-700 dark:before:via-gray-600 dark:before:to-gray-700 before:animate-shimmer aspect-[3/4.248]"
+        v-if="!isImageLoaded"
+        class="absolute inset-0 bg-gray-200 dark:bg-gray-700 before:absolute before:inset-0 before:bg-[length:200%_100%] before:bg-gradient-to-r before:from-gray-200 before:via-gray-300 before:to-gray-200 dark:before:from-gray-700 dark:before:via-gray-600 dark:before:to-gray-700 before:animate-shimmer z-0"
       ></div>
 
       <img
         v-if="anime?.poster"
         ref="imgRef"
         :src="`https://dl-20240330-7.anilib.moe${anime.poster}`"
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300"
-        :class="{ 'opacity-0': !isImageLoaded }"
+        class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
       />
 
       <div
-        v-if="isImageLoaded && anime?.description"
-        class="flex scrollbar max-mobile:hidden flex-col gap-3 absolute z-10 top-0 p-4 overflow-y-auto left-0 w-full h-full hover:bg-cardOpacity hover:text-white duration-300 text-transparent"
+        v-if="anime?.description"
+        class="flex scrollbar max-mobile:hidden flex-col gap-3 absolute z-20 top-0 p-4 overflow-y-auto left-0 w-full h-full hover:bg-cardOpacity hover:text-white duration-300 text-transparent"
       >
         <span>{{ anime.description }}</span>
-        Дата выхода: {{ anime.season.string }} - {{ anime.season.year }}
-      </div>
 
-      <div
-        v-if="!isImageLoaded || !anime?.description"
-        class="absolute bottom-0 w-full h-6 rounded-[15px] bg-gray-200 dark:bg-gray-700"
-      ></div>
+        <span>Дата выхода: {{ anime.season.string }} - {{ anime.season.year }}</span>
+      </div>
     </div>
 
-    <div class="flex flex-col items-center w-full">
+    <div class="flex flex-col items-center w-full min-h-6">
+      <div
+        v-if="!anime?.names?.ru && !anime?.names?.en"
+        class="w-full h-6 rounded-[15px] bg-gray-200 dark:bg-gray-700"
+      ></div>
+
       <h2
-        class="font-medium w-full text-white duration-300 whitespace-nowrap text-ellipsis overflow-hidden"
+        v-else
+        class="font-medium w-full text-white whitespace-nowrap text-ellipsis overflow-hidden"
       >
-        {{ anime?.names.ru || "" }}
+        {{ anime?.names.ru ?? anime?.names.en }}
       </h2>
     </div>
   </article>

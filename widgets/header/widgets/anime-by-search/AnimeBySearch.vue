@@ -15,7 +15,7 @@ const debouncedSearch = useDebounceFn(async (query: string) => {
 }, 1000);
 
 const goPageAnime = (code: string) => {
-  navigateTo(`/anime/${code}`);
+  navigateTo(`/anime/${code}/1`);
   searchAnime.value = "";
   arrayAnime.value = null;
 };
