@@ -9,7 +9,7 @@ import  PopperMenu  from "@/shared/ui/poppers/popper-menu/PopperMenu.vue";
 const store = useAnimeStore();
 
 const goPageLK = () => {
-  navigateTo(`/lk/${store.user?.id}/История просмотра`);
+  navigateTo(`/lk/${store.user?.id}`);
 };
 
 const userAvatar = computed(() => {
