@@ -31,35 +31,33 @@ const loadMore = async () => {
 
 const goPageAnime = (code: string) => {
   navigateTo(`/anime/${code}/1`);
-  
 };
 </script>
 
 <template>
   <div class="flex flex-col items-center pb-5 gap-3">
-    <AnimeGrid>
+    <div
+      v-if="!aniList && !isLoading"
+      class="flex w-full h-full items-center justify-center"
+    >
+      <img src="@/shared/assets/image/noAnime.png" class="rounded-lg" />
+    </div>
+
+    <AnimeGrid v-else>
       <AnimeCard
-        v-for="(animeCard, index) in aniList"
-        :key="animeCard.id"
+        v-for="(animeCard, index) in aniList ?? Array.from({ length: 10 }) as IAnimeCard[]"
+        :key="index"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
         @click="goPageAnime(animeCard.code)"
       ></AnimeCard>
 
-      <AnimeGridSkeleton 
+      <!-- <AnimeGridSkeleton 
       v-for="i in aniList?.length ? 5 : 10" 
       v-show="isLoading"
       :key="'skeleton-'+i"
-    />
+    /> -->
     </AnimeGrid>
-
-    <div class="flex w-full h-full items-center justify-center">
-      <img
-        v-if="!aniList && !isLoading"
-        src="@/shared/assets/image/noAnime.png"
-        class="rounded-lg"
-      />
-    </div>
 
     <Button
       v-if="aniList && !isLoading"
