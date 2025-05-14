@@ -14,6 +14,8 @@ export interface IUser {
     nameAnime: string;
     img: string | null;
     episode: number;
+    updated: number;
+    code: string
   }
 
  export interface IRegisterForm {

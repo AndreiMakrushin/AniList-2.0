@@ -143,6 +143,7 @@ const currentEpisodeList = computed(() => {
         :anime-id="anime?.id"
         :anime-name="anime?.names.ru"
         :user="store.user.value"
+        :anime-code="anime?.code"
         :episode="+episode"
         preview-url="https://dl-20211030-963.anilib.top"
         seria-url="https://cache.libria.fun"

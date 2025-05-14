@@ -15,6 +15,7 @@ import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
 const props = defineProps<{
   user?: IUser | null;
   episode?: number | undefined;
+  animeCode: string;
   animePlay: IAnimePlayer | undefined;
   animeName?: string;
   animeId?: number;
@@ -87,16 +88,16 @@ const updateEpisode = (event: number) => {
 };
 const playVideo = () => {
   if (!videoElement.value) return;
-  
+
   if (props.user) {
-    
     addAnimeToHistory(
       props.user.id,
       videoElement.value,
       props.animeId!,
       props.animeName!,
-      props.previewUrl!,
-      episodeAnime.value
+      previewAnime.value!,
+      episodeAnime.value,
+      props.animeCode
     );
   }
   isPreview.value = true;
