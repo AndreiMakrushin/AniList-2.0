@@ -57,7 +57,7 @@ const goPageAnime = (code: string) => {
 
     <Button
       v-if="aniList && !isLoading"
-      label="Load more"
+      label="Загрузить еще"
       class="text-white text-base !w-fit !p-3 cursor-pointer"
       @click="loadMore"
     />

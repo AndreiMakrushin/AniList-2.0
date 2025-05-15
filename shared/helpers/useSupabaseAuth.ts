@@ -42,6 +42,14 @@ export const useSupabaseAuth = () => {
         getUser: async () => {
             const { data, error } = await $supabase.auth.getUser()
             return { data, error }
+        },
+
+        deleteUserAvatar: async (id: string) =>{
+            const { error } = await $supabase
+            .from('users')
+            .update({ avatar_url: null })
+            .eq('id', id)
+            return { error }
         }
 }
 }

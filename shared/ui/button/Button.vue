@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SvgSprite from "~/shared/ui/sprite-svg/SvgSprite.vue";
 defineProps<{
     label: string,
     disabled?: boolean

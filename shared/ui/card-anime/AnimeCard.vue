@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="flex flex-col items-center gap-3 cursor-pointer w-full" :class="{ 'pointer-events-none': !isImageLoaded }">
+  <article class="flex flex-col items-center gap-3 cursor-pointer w-full" :class="{ 'pointer-events-none': isImageLoaded }">
     <div class="relative w-full aspect-[3/4.248] rounded-[15px] overflow-hidden">
       <div
         v-if="!isImageLoaded"
