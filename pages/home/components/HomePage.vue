@@ -32,6 +32,18 @@ const loadMore = async () => {
 const goPageAnime = (code: string) => {
   navigateTo(`/anime/${code}/1`);
 };
+
+const displayedItems = computed<IAnimeCard[]>(() => {
+  if (!aniList.value || aniList.value.length === 0) {
+    return Array(10).fill({}) as IAnimeCard[];
+  }
+
+  if (isLoading.value) {
+    return [...aniList.value, ...(Array(5).fill({}) as IAnimeCard[])];
+  }
+
+  return aniList.value;
+});
 </script>
 
 <template>
@@ -45,7 +57,7 @@ const goPageAnime = (code: string) => {
 
     <AnimeGrid v-else>
       <AnimeCard
-        v-for="(animeCard, index) in aniList ?? Array.from({ length: 10 }) as IAnimeCard[]"
+        v-for="(animeCard, index) in displayedItems"
         :key="index"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
