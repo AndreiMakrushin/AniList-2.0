@@ -34,12 +34,13 @@ const goPageAnime = (code: string) => {
 };
 
 const displayedItems = computed<IAnimeCard[]>(() => {
-  if (!aniList.value || aniList.value.length === 0) {
-    return Array(10).fill({}) as IAnimeCard[];
+  if (!aniList.value) {
+    return Array(10).fill({} as IAnimeCard);
   }
 
   if (isLoading.value) {
-    return [...aniList.value, ...(Array(5).fill({}) as IAnimeCard[])];
+    const skeletonItems = Array(5).fill({} as IAnimeCard);
+    return [...aniList.value, ...skeletonItems];
   }
 
   return aniList.value;
