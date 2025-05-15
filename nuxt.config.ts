@@ -1,8 +1,13 @@
 import Aura from "@primevue/themes/aura";
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-ssr: true,
+ssr: false,
 
 vite: {
   build: {
@@ -22,7 +27,9 @@ build: {
     "@pinia/nuxt",
     "@primevue/nuxt-module"
   ],
-  css: ["./shared/assets/css/main.css","primeicons/primeicons.css"],
+  css: [
+    'primeicons/primeicons.css'
+  ],
   primevue: {
     autoImport: true,
     options: {
@@ -84,8 +91,9 @@ build: {
   },
 
   alias: {
-    assets: './shared/assets',
-    public: './shared/public',
+    'shared': join(currentDir, './shared'),
+    'assets': join(currentDir, './shared/assets'),
+    'public': join(currentDir, './shared/public'),
   },
   components: [
     {

@@ -35,7 +35,7 @@ onMounted(async () => {
 <template>
   <div class="p-5">
     <div class="block bg-white shadow-shadowDrop rounded-[15px] p-3 mb-5">
-      <div class="flex flex-row gap-10 max-pads:gap-5">
+      <div class="flex flex-row gap-10 max-pads:gap-5 max-pads:flex-col max-pads:items-center">
         <Avatar
           :img="user?.avatar_url"
           class="max-h-[150px] aspect-square"
@@ -52,15 +52,15 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-5">
+    <div class="grid grid-cols-3 gap-5 max-pads:flex max-pads:flex-col">
       <div
-        class="bg-white shadow-shadowDrop rounded-[15px] h-fit p-3 mb-5 flex flex-col gap-3"
+        class="bg-white shadow-shadowDrop rounded-[15px] h-fit p-3 mb-5 flex flex-col overflow-scroll gap-3 max-pads:flex max-pads:flex-row max-pads:gap-3"
       >
         <span
           v-for="status in animeStatus"
           :key="status.id"
           :class="[
-            'px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer',
+            'px-3 py-2 rounded-lg transition-all text-nowrap duration-200 cursor-pointer',
             +statusCode === status.id
               ? 'bg-[#f5f0ff] text-[#7e22ce] font-medium border-none'
               : 'text-[#6b7280] hover:bg-[#f8f5ff]',
