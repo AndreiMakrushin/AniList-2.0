@@ -1,3 +1,3 @@
-import CardAnimeHistory from "./CardAnimeHistory.vue";
+import HistoryAnimeCard from "./HistoryAnimeCard.vue";
 
-export default CardAnimeHistory;
+export default HistoryAnimeCard;

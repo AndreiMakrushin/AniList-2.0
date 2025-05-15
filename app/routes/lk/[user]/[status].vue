@@ -3,7 +3,7 @@ import LkPage from "@/pages/lk";
 
 const route = useRoute();
 const userId = route.params.user as string;
-const status = route.params.status as string;
+const statusCode = route.params.status as string;
 
 useHead({
   title: "Личный кабинет",
@@ -11,7 +11,7 @@ useHead({
 </script>
 
 <template>
-  <LkPage :id="userId" :status="status"/>
+  <LkPage :id="userId" :status-code="statusCode"/>
 </template>
 
 <style scoped></style>
