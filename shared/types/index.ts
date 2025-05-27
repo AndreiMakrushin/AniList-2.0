@@ -17,6 +17,14 @@ export interface IUser {
     updated: number;
     code: string
   }
+  export interface IAnimeStatus{
+    img: string;
+    nameAnime: string;
+    animeId: number;
+    statusId: string;
+    statusRu: string;
+    statusEn: string
+  }
 
  export interface IRegisterForm {
     name: string

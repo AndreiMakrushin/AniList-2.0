@@ -2,6 +2,8 @@
 import type { TAnime } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
+import { animeStatus } from "~/shared/helpers/animeStatuses";
+import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
 
 const props = defineProps<{
   episode: string;
@@ -10,6 +12,8 @@ const props = defineProps<{
 
 const anime = ref<TAnime | null>(props.anime);
 const store = storeToRefs(useAnimeStore());
+const { addAnimeToStatus } = useSupabaseAnime();
+const statusAnime = ref("");
 
 const lastUpdate = computed(() => {
   const date = new Date((anime.value?.updated as number) * 1000);
@@ -23,6 +27,30 @@ const lastUpdate = computed(() => {
 const currentEpisodeList = computed(() => {
   return Object.keys(anime.value?.player?.list || {}).length || "0";
 });
+
+const animeState = computed(() => {
+  const status = animeStatus.find((s) => s.id === statusAnime.value);
+
+  return status
+    ? {
+        id: status.id,
+        statusRu: status.statusRu,
+        statusEn: status.statusEn ?? null,
+      }
+    : null;
+});
+const recordAnimeStatus = async () => {
+  if (store?.user.value && animeState.value) {
+    await addAnimeToStatus(store.user.value.id, {
+      img: anime.value!.posters?.original.url,
+      nameAnime: anime.value!.names.ru,
+      animeId: anime.value!.id,
+      statusId: animeState.value.id,
+      statusRu: animeState.value.statusRu,
+      statusEn: animeState.value.statusEn,
+    });
+  }
+};
 </script>
 
 <template>
@@ -45,8 +73,14 @@ const currentEpisodeList = computed(() => {
         <div v-if="!anime" class="absolute inset-0 bg-gray-700/50 animate-pulse"></div>
       </div>
 
-      <!-- DropDown можно раскомментировать при необходимости -->
-      <!-- <DropDown v-if="animeStore?.user" class="hidden md:block" ... /> -->
+      <div v-if="store?.user.value" class="flex">
+        <DropDownSelect
+          v-model="statusAnime"
+          :options="animeStatus.slice(1)"
+          placeholder="Добавить в список"
+          @update:model-value="recordAnimeStatus"
+        />
+      </div>
     </div>
 
     <div class="flex flex-col flex-1 gap-10">

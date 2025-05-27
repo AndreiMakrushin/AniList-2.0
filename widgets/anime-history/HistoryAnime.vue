@@ -23,9 +23,7 @@ const sortedAnimeByUpdate = computed(() => {
 
 <template>
   <div class="flex flex-col gap-5 mb-[30px]">
-    <span class="text-white text-[18px]">История просмотра</span>
-
-    <div class="grid grid-cols-3 gap-5 max-pads:grid-cols-2 max-mobile:grid-cols-1">
+    <div class="grid grid-cols-2 gap-5 max-mobile:grid-cols-1">
       <HistoryAnimeCard
         v-for="item in sortedAnimeByUpdate"
         :key="item.animeId"

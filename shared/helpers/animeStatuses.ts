@@ -1,36 +1,36 @@
 export const animeStatus = [
     {
-      id: 1,
+      id: "history",
       statusRu: "История просмотра",
       statusEn: "Watching history",
     },
     {
-      id: 2,
+      id: "watching",
       statusRu: "Смотрю",
       statusEn: "Watching",
     },
     {
-      id: 3,
+      id: "watched",
       statusRu: "Просмотрено",
       statusEn: "Watched",
     },
     {
-      id: 4,
+      id: "planned",
       statusRu: "Запланировано",
-      status: "Planned",
+      statusEn: "Planned",
     },
     {
-      id: 5,
+      id: "rereading",
       statusRu: "Пересматриваю",
       statusEn: "Rereading",
     },
     {
-      id: 6,
+      id: "upcoming",
       statusRu: "Выходит",
       statusEn: "Upcoming",
     },
     {
-      id: 7,
+      id: "abandoned",
       statusRu: "Заброшено",
       statusEn: "Abandoned",
     },

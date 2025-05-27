@@ -1,4 +1,4 @@
-import type { IAddAnime } from "~/shared/types";
+import type { IAddAnime, IAnimeStatus } from "~/shared/types";
 import {realTimeUpdate} from "@/shared/helpers/realTimeUpdate";
 export const useSupabaseAnime = () => {
     const {$supabase} = useNuxtApp()
@@ -54,6 +54,69 @@ export const useSupabaseAnime = () => {
                 console.log(error);
                 return [];
             }
-        }
+        },
+        getAnimeToStatus: async(status: string): Promise<IAnimeStatus[]> => {
+            try {
+                const { data } = await $supabase
+                    .from('animeStatusList')
+                    .select()
+                    .filter("statusId", "eq", status);
+                return data ?? [];
+            } catch (error) {
+                console.log(error);
+                return [];
+            }
+        },
+        addAnimeToStatus: async (userId: string, anime: IAnimeStatus) => {
+            try {
+              const { data: existingRecord, error: selectError } = await $supabase
+                .from('animeStatusList')
+                .select()
+                .eq("userId", userId)
+                .eq("animeId", anime.animeId)
+                .maybeSingle();
+          
+              if (selectError) throw selectError;
+          
+              if (!existingRecord) {
+                const { error: insertError } = await $supabase
+                  .from('animeStatusList')
+                  .insert({
+                    userId: userId,
+                    img: anime.img,
+                    nameAnime: anime.nameAnime,
+                    animeId: anime.animeId,
+                    statusId: anime.statusId,
+                    statusRu: anime.statusRu,
+                    statusEn: anime.statusEn,
+                  });
+                
+                if (insertError) throw insertError;
+                return { success: true, operation: 'insert' };
+              }
+              
+              const { error: updateError } = await $supabase
+                .from('animeStatusList')
+                .update({
+                  statusId: anime.statusId,
+                  statusRu: anime.statusRu,
+                  statusEn: anime.statusEn,
+                  img: anime.img,
+                  nameAnime: anime.nameAnime
+                })
+                .eq("userId", userId)
+                .eq("animeId", anime.animeId);
+          
+              if (updateError) throw updateError;
+              return { success: true, operation: 'update' };
+          
+            } catch (error) {
+              console.error('Error in addAnimeToStatus:', error);
+              return { 
+                success: false, 
+                error: error instanceof Error ? error.message : String(error)
+              };
+            }
+          }
     }
 }

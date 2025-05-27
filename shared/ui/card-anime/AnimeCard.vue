@@ -1,36 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import type { IAnimeCard } from "@/shared/types";
 
-const props = defineProps<{
+defineProps<{
   anime: IAnimeCard | undefined;
 }>();
-
-const isImageLoaded = ref(false);
-const imgRef = ref<HTMLImageElement | null>(null);
-
-onMounted(() => {
-  if (imgRef.value && props.anime?.poster) {
-    if (imgRef.value.complete) {
-      isImageLoaded.value = true;
-      return;
-    }
-
-    imgRef.value.onload = () => {
-      isImageLoaded.value = true;
-    };
-    imgRef.value.onerror = () => {
-      isImageLoaded.value = false;
-    };
-  }
-});
 </script>
 
 <template>
-  <article class="flex flex-col items-center gap-3 cursor-pointer w-full" :class="{ 'pointer-events-none': isImageLoaded }">
+  <article
+    class="flex flex-col items-center gap-3 cursor-pointer w-full"
+    :class="{ 'pointer-events-none': !anime?.poster }"
+  >
     <div class="relative w-full aspect-[3/4.248] rounded-[15px] overflow-hidden">
       <div
-        v-if="!isImageLoaded"
+        v-if="!anime?.poster"
         class="absolute inset-0 bg-gray-200 dark:bg-gray-700 before:absolute before:inset-0 before:bg-[length:200%_100%] before:bg-gradient-to-r before:from-gray-200 before:via-gray-300 before:to-gray-200 dark:before:from-gray-700 dark:before:via-gray-600 dark:before:to-gray-700 before:animate-shimmer z-0"
       ></div>
 

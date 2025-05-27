@@ -10,6 +10,123 @@
   }
 } */
 
+/* Manrope font family */
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-ExtraLight.woff2) format("woff2");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-Light.woff2) format("woff2");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-Regular.woff2) format("woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-Medium.woff2) format("woff2");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-SemiBold.woff2) format("woff2");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url(../fonts/Manrope-ExtraBold.woff2) format("woff2");
+  font-weight: 800;
+}
+
+/* TT Travels font family */
+
+@font-face {
+  /* Do we really need this font? */
+  font-family: "Travels";
+  src: url(../fonts/TT_Travels_Next_Trial_Bold.ttf) format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Travels";
+  src: url(../fonts/TT_Travels_Next_Trial_Variable.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(../fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+/* Soledago font family */
+
+@font-face {
+  font-family: "Soledago";
+  src: url(../fonts/Soledago.ttf) format("truetype");
+}
+
+/* TODO: Delete this bindings */
+
+@font-face {
+  font-family: "Manrope-Medium";
+  src: url(../fonts/Manrope-Medium.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope-Light";
+  src: url(../fonts/Manrope-Light.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope-ExtraBold";
+  src: url(../fonts/Manrope-ExtraBold.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope-ExtraLight";
+  src: url(../fonts/Manrope-ExtraLight.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope-SemiBold";
+  src: url(../fonts/Manrope-SemiBold.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Travels";
+  src: url(../fonts/TT_Travels_Next_Trial_Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "TravelsVariable";
+  src: url(../fonts/TT_Travels_Next_Trial_Variable.woff2) format("woff2");
+}
+
 .scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-custom::-webkit-scrollbar {
+  width: 6px;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background-color: #e7e7e7;
+  border-radius: 12px;
+  width: 4px;
 }
