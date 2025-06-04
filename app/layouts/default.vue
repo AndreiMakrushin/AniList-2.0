@@ -16,13 +16,11 @@ import Footer from "@/widgets/footer";
 <style scoped>
 .app-layout {
   background-image: url("@/shared/public/images/bg.jpg");
-  position: relative;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  justify-content: space-between;
+  background-attachment: fixed;
   min-height: 100vh;
-  overflow-y: scroll;
   scroll-behavior: smooth;
 }
 </style>

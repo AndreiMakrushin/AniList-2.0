@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear();
     <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-0"></div>
 
     <div
-      class="max-w-7xl relative flex flex-row gap-5 z-20 p-6 items-center justify-start border-t border-gray-800/50 text-center text-gray-400 text-sm"
+      class="max-w-7xl relative flex flex-row max-mobile:flex-col gap-5 z-20 p-6 items-center justify-start border-t border-gray-800/50 text-center text-gray-400 text-sm"
     >
       <img
         src="@/shared/public/favicon.svg"
