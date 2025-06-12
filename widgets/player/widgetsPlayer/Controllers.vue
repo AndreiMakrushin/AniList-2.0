@@ -16,8 +16,8 @@ const emit = defineEmits<{
 
 defineProps<{
   playing?: boolean;
-  videoTime?: string;
-  videoDuration?: string;
+  videoTime: string;
+  videoDuration: string;
   fullscreen?: boolean;
 }>();
 </script>

@@ -5,6 +5,25 @@ export interface IUser {
     name: string
     avatar_url: string
   }
+  export interface IAddAnimeToHistory {
+    videoElement: HTMLVideoElement | null;
+    animeId: number;
+    animeName: string;
+    animePoster: string;
+    episodeAnime: number;
+    code: string
+  }
+  export interface IAnimeHistoryRecord {
+    currentTime: number;
+    episode: number;
+  }
+
+  export interface IRealTimeUpdate {
+    animeId: number;
+    episodeAnime: number;
+    timer: number;
+    realTimeUpdate: string;
+  }
 
   export interface IAddAnime {
     animeId: number;
@@ -16,6 +35,7 @@ export interface IUser {
     episode: number;
     updated: number;
     code: string
+    
   }
   export interface IAnimeStatus{
     img: string;

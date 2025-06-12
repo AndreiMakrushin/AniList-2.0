@@ -4,7 +4,6 @@ import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
 import { animeStatus } from "~/shared/helpers/animeStatuses";
 import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
-
 const props = defineProps<{
   episode: string;
   anime: TAnime;
@@ -12,7 +11,12 @@ const props = defineProps<{
 
 const anime = ref<TAnime | null>(props.anime);
 const store = storeToRefs(useAnimeStore());
-const { addAnimeToStatus } = useSupabaseAnime();
+const {
+  addAnimeToStatus,
+  addAnimeToHistory,
+  updateAnimeHistory,
+  getStatusAnime,
+} = useSupabaseAnime();
 const statusAnime = ref("");
 
 const lastUpdate = computed(() => {
@@ -49,6 +53,40 @@ const recordAnimeStatus = async () => {
       statusRu: animeState.value.statusRu,
       statusEn: animeState.value.statusEn,
     });
+  }
+};
+
+const loadAnimeStatus = async () => {
+  if (!anime.value?.id || !store.user) return;
+
+  try {
+    statusAnime.value = await getStatusAnime(anime.value.id);
+  } catch (error) {
+    console.error("Ошибка загрузки статуса аниме:", error);
+  }
+};
+
+watch(store.user, async () => {
+  if (store.user.value) {
+    await loadAnimeStatus();
+  }
+});
+
+onMounted(async () => {
+  if (store.user.value) {
+    await loadAnimeStatus();
+  }
+});
+
+const userId = computed(() => {
+  return store?.user.value?.id;
+});
+
+const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
+  const { currentTime } = await addAnimeToHistory(history, userId.value!);
+
+  if (history.videoElement && currentTime) {
+    history.videoElement.currentTime = currentTime;
   }
 };
 </script>
@@ -174,13 +212,15 @@ const recordAnimeStatus = async () => {
 
       <Player
         :anime-play="anime?.player"
-        :anime-id="anime?.id"
+        :anime-id="anime?.id!"
         :anime-name="anime?.names.ru"
-        :user="store.user.value"
+        :update-history="store.user.value ? true : false"
         :anime-code="anime?.code!"
         :episode="+episode"
         preview-url="https://dl-20211030-963.anilib.top"
-        seria-url="https://cache.libria.fun"
+        episode-url="https://cache.libria.fun"
+        @add-history="checkAnimeHistory($event)"
+        @real-time-update="updateAnimeHistory($event, userId!)"
       />
     </div>
   </div>
