@@ -1,29 +1,36 @@
 <script setup lang="ts">
-import { onMounted, defineProps, ref, watch, computed, onUnmounted } from "vue";
 import Hls from "hls.js";
 import SelectEpisode from "./widgetsPlayer/SelectEpisode.vue";
 import Preview from "./widgetsPlayer/Preview.vue";
 import ProgressBar from "./widgetsPlayer/progress-bar/ProgressBar.vue";
 import Controllers from "./widgetsPlayer/Controllers.vue";
-import type { IAnimePlayer, IUser } from "@/shared/types";
+import type {
+  IAnimePlayer,
+  IUser,
+  IAddAnimeToHistory,
+  IRealTimeUpdate,
+} from "@/shared/types";
 import noImg from "@/shared/assets/image/noAnime.png";
 import { useScreenShooter } from "@/shared/helpers/useScreenShooter";
 import QualityVideo from "./widgetsPlayer/QualityVideo.vue";
 import { videoTimer } from "./helpers/video-timer";
-import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
+
+const emit = defineEmits<{
+  (e: "addHistory", payload: IAddAnimeToHistory): void;
+  (e: "realTimeUpdate", event: IRealTimeUpdate): void;
+}>();
 
 const props = defineProps<{
   user?: IUser | null;
+  /* вынести из плеера */
   episode?: number | undefined;
   animeCode: string;
   animePlay: IAnimePlayer | undefined;
   animeName?: string;
-  animeId?: number;
+  animeId: number;
   previewUrl?: string;
-  seriaUrl?: string;
+  episodeUrl?: string;
 }>();
-
-const { addAnimeToHistory } = useSupabaseAnime();
 
 const episodeAnime = ref<number>(props.episode!);
 const quality = ref<string>("hd");
@@ -43,13 +50,13 @@ const previewAnime = computed(() => {
   return preview ? `${props.previewUrl}${preview}` : noImg;
 });
 
-const seria = computed(() => {
+const episode = computed(() => {
   const hlsSource = props.animePlay?.list[episodeAnime.value]?.hls?.[quality.value];
-  return hlsSource ? `${props.seriaUrl}${hlsSource}` : "";
+  return hlsSource ? `${props.episodeUrl}${hlsSource}` : "";
 });
 
 const loadPlayer = () => {
-  if (!seria.value || !videoElement.value) {
+  if (!episode.value || !videoElement.value) {
     return;
   }
   if (hlsInstance.value) {
@@ -57,12 +64,12 @@ const loadPlayer = () => {
   }
   if (Hls.isSupported()) {
     const hls = new Hls();
-    hls.loadSource(seria.value);
+    hls.loadSource(episode.value);
     hls.attachMedia(videoElement.value);
     videoElement.value.currentTime = timer.value;
     hlsInstance.value = hls;
   } else if (videoElement.value?.canPlayType("application/vnd.apple.mpegurl")) {
-    videoElement.value.src = seria.value;
+    videoElement.value.src = episode.value;
   }
 };
 
@@ -83,30 +90,36 @@ watch([props, episodeAnime, quality], () => {
 const updateEpisode = (event: number) => {
   resetParameters();
   episodeAnime.value = event;
-
-  /* emit("updateEpisode", Number(event)); */
 };
-const playVideo = () => {
+
+const recordAnimeToHistory = () => {
+  if (props.user) {
+    emit("addHistory", {
+      userId: props.user.id,
+      videoElement: videoElement.value,
+      animeId: props.animeId,
+      animeName: props.animeName!,
+      animePoster: previewAnime.value!,
+      episodeAnime: episodeAnime.value,
+      code: props.animeCode,
+    });
+  }
+};
+const playVideo = async () => {
   if (!videoElement.value) return;
 
-  if (props.user) {
-    addAnimeToHistory(
-      props.user.id,
-      videoElement.value,
-      props.animeId!,
-      props.animeName!,
-      previewAnime.value!,
-      episodeAnime.value,
-      props.animeCode
-    );
-  }
   isPreview.value = true;
   playing.value = true;
-  videoElement.value.play();
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    controllers.value = false;
-  }, 5000);
+  try {
+    await videoElement.value.play();
+    videoElement.value.play();
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      controllers.value = false;
+    }, 5000);
+  } catch (error) {
+    isQualityVideo.value = true;
+  }
 };
 
 const videoPaused = () => {
@@ -167,32 +180,31 @@ const updateQuality = (event: string) => {
   videoPaused();
 };
 
-const timeUpdate = () => {
-  if (!videoElement.value) return;
-  timer.value = Math.floor(videoElement.value?.currentTime);
-};
-
-/* const realTimeUpdate = () => {
+const realTimeUpdate = () => {
   const date = new Date().toLocaleDateString();
   const normalDate = date.split(".");
   const dateNormal = `${normalDate[2]}-${normalDate[1]}-${normalDate[0]}`;
   const time = new Date().toLocaleTimeString();
 
   return `${dateNormal} ${time}`;
-}; */
+};
 
-/* watch(timer, () => {
-  if (props.user === null) return;
+const timeUpdate = () => {
+  if (!videoElement.value) return;
+  timer.value = Math.floor(videoElement.value?.currentTime);
+};
+
+watch(timer, () => {
+  if (!props.user) return;
   if (timer.value < 1) return;
-
-  updateAnimeHistory(
-    props.user.id,
-    props.animeId,
-    episodeAnime.value,
-    timer.value,
-    realTimeUpdate()
-  );
-}); */
+  emit("realTimeUpdate", {
+    userId: props.user?.id,
+    animeId: props.animeId,
+    episodeAnime: episodeAnime.value,
+    timer: timer.value,
+    realTimeUpdate: realTimeUpdate(),
+  });
+});
 
 const showControllers = () => {
   if (!playing.value) return;
@@ -255,7 +267,8 @@ onUnmounted(() => {
   document.removeEventListener("keydown", handleKeyPress);
   document.removeEventListener("fullscreenchange", fullscreenChange);
   if (hlsInstance.value) {
-    hlsInstance.value.destroy();
+    hlsInstance.value?.off(Hls.Events.ERROR);
+    hlsInstance.value?.destroy();
   }
   clearTimeout(timeout);
 });
@@ -272,7 +285,7 @@ onUnmounted(() => {
     <Preview
       v-if="!isPreview"
       :preview-anime="previewAnime ?? noImg"
-      @click="playVideo()"
+      @click="[playVideo(), recordAnimeToHistory()]"
     />
 
     <!-- addAnimeToHistory() -->

@@ -1,47 +1,49 @@
-import type { IAddAnime, IAnimeStatus } from "~/shared/types";
+import type { IAddAnime, IAnimeStatus, IAddAnimeToHistory, IRealTimeUpdate, IAnimeHistoryRecord } from "~/shared/types";
 import {realTimeUpdate} from "@/shared/helpers/realTimeUpdate";
 export const useSupabaseAnime = () => {
     const {$supabase} = useNuxtApp()
 
     return {
        
-         addAnimeToHistory: async (user: string, videoElement: HTMLVideoElement, animeId: number, animeName: string, animePoster: string, episodeAnime: number, code: string) => {
-            try {
-                const {data: existsAnime} = await $supabase
-                    .from('animeUserList')
-                    .select()
-                    .filter("animeId", "eq", animeId)
-                    .filter("episode", "eq", episodeAnime)
-                    .filter("userId", "eq", user)
-                    .single()
-                
-                
-                
-                const animeToHistory = {
-                    animeId,
-                    userId: user,
-                    current_Time: videoElement.currentTime,
-                    duration_Time: Math.floor(videoElement.duration || 0),
-                    nameAnime: animeName,
-                    img: animePoster ? animePoster : null,
-                    episode: episodeAnime,
-                    updated: realTimeUpdate(),
-                    code: code
-                }
-                
-                
-                try {
-                    if(existsAnime) return
-                    console.log(animeToHistory);
-                    
-                    await $supabase.from('animeUserList').insert(animeToHistory)
-                } catch(error) {
-                    console.log(error)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        },
+      addAnimeToHistory: async (payload: IAddAnimeToHistory): Promise<IAnimeHistoryRecord> => {
+        try {
+          const { data: existsAnime } = await $supabase
+            .from('animeUserList')
+            .select()
+            .eq("animeId", payload.animeId)
+            .eq("episode", payload.episodeAnime)
+            .eq("userId", payload.userId)
+            .single();
+      
+          const animeToHistory = {
+            animeId: payload.animeId,
+            userId: payload.userId,
+            current_Time: payload.videoElement?.currentTime,
+            duration_Time: Math.floor(payload.videoElement?.duration ?? 0),
+            nameAnime: payload.animeName,
+            img: payload.animePoster ?? null,
+            episode: payload.episodeAnime,
+            updated: realTimeUpdate(),
+            code: payload.code
+          };
+      
+          if (!existsAnime) {
+            await $supabase.from('animeUserList').insert(animeToHistory);
+          }
+      
+          return {
+            currentTime: existsAnime.current_Time,
+            episode: existsAnime.episode
+          };
+      
+        } catch (error) {
+          console.error('Error in addAnimeToHistory:', error);
+          return {
+            currentTime: 0,
+            episode: 1
+          };
+        }
+      },
 
         getAnimeToHistory: async (user: string): Promise<IAddAnime[]> => {
             try {
@@ -77,7 +79,6 @@ export const useSupabaseAnime = () => {
                 .maybeSingle();
           
               if (selectError) throw selectError;
-          
               if (!existingRecord) {
                 const { error: insertError } = await $supabase
                   .from('animeStatusList')
@@ -116,6 +117,44 @@ export const useSupabaseAnime = () => {
                 success: false, 
                 error: error instanceof Error ? error.message : String(error)
               };
+            }
+          },
+          updateAnimeHistory: async (update: IRealTimeUpdate) => {
+            try {
+              
+              const { data: existingRecord, error: findError } = await $supabase
+                .from('animeUserList')
+                .select()
+                .eq('animeId', update.animeId)
+                .eq('episode', update.episodeAnime)
+                .eq('userId', update.userId)
+                .maybeSingle();
+          
+              if (findError) throw findError;
+              
+              
+              if (!existingRecord) {
+                console.error(`Anime not found for user ${update.userId}, anime ${update.animeId}, episode ${update.episodeAnime}`);
+                return null; 
+              }
+          
+              
+              const { error: updateError } = await $supabase
+                .from('animeUserList')
+                .update({
+                  current_Time: update.timer,
+                  updated: update.realTimeUpdate,
+                  
+                })
+                .eq('id', existingRecord.id); 
+          
+              if (updateError) throw updateError;
+          
+              return { success: true };
+          
+            } catch (error) {
+              console.error('Failed to update anime history:', error);
+              throw error;
             }
           }
     }
