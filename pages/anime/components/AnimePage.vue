@@ -11,7 +11,12 @@ const props = defineProps<{
 
 const anime = ref<TAnime | null>(props.anime);
 const store = storeToRefs(useAnimeStore());
-const { addAnimeToStatus, addAnimeToHistory, updateAnimeHistory } = useSupabaseAnime();
+const {
+  addAnimeToStatus,
+  addAnimeToHistory,
+  updateAnimeHistory,
+  getStatusAnime,
+} = useSupabaseAnime();
 const statusAnime = ref("");
 
 const lastUpdate = computed(() => {
@@ -50,6 +55,28 @@ const recordAnimeStatus = async () => {
     });
   }
 };
+
+const loadAnimeStatus = async () => {
+  if (!anime.value?.id || !store.user) return;
+
+  try {
+    statusAnime.value = await getStatusAnime(anime.value.id);
+  } catch (error) {
+    console.error("Ошибка загрузки статуса аниме:", error);
+  }
+};
+
+watch(store.user, async () => {
+  if (store.user.value) {
+    await loadAnimeStatus();
+  }
+});
+
+onMounted(async () => {
+  if (store.user.value) {
+    await loadAnimeStatus();
+  }
+});
 
 const userId = computed(() => {
   return store?.user.value?.id;

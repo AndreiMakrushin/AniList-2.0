@@ -57,17 +57,32 @@ export const useSupabaseAnime = () => {
                 return [];
             }
         },
-        getAnimeToStatus: async(status: string): Promise<IAnimeStatus[]> => {
+        getAnimeToStatus: async(status: string, userId: string): Promise<IAnimeStatus[]> => {
             try {
                 const { data } = await $supabase
                     .from('animeStatusList')
                     .select()
-                    .filter("statusId", "eq", status);
+                    .filter("statusId", "eq", status)
+                    .filter("userId", "eq", userId);
+
                 return data ?? [];
             } catch (error) {
                 console.log(error);
                 return [];
             }
+        },
+        getStatusAnime: async (animeId: number): Promise<string> => {
+          try {
+            const { data } = await $supabase
+              .from('animeStatusList')
+              .select('statusId')
+              .eq('animeId', animeId)
+              .single();
+            return data?.statusId ?? '';
+          } catch (error) {
+            console.log(error);
+            return '';
+          }
         },
         addAnimeToStatus: async (userId: string, anime: IAnimeStatus) => {
             try {
