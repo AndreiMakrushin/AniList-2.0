@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <footer
-    class="w-full relative z-10 rounded-t-xl overflow-hidden text-white bg-gradient-to-r from-gray-900/80 to-indigo-900/80"
+    class="w-full relative bottom-0 z-10 rounded-t-xl overflow-hidden text-white bg-gradient-to-r from-gray-900/80 to-indigo-900/80"
   >
     <div class="absolute inset-0 backdrop-blur-lg z-0"></div>
 

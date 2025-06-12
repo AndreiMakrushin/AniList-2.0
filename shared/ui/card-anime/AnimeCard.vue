@@ -1,15 +1,29 @@
 <script setup lang="ts">
 import type { IAnimeCard } from "@/shared/types";
 
-defineProps<{
-  anime: IAnimeCard | undefined;
+const props = defineProps<{
+  anime: IAnimeCard | null;
 }>();
+
+const hasAnyData = computed(() => {
+  return (
+    props.anime && (props.anime.poster || props.anime.names?.ru || props.anime.names?.en)
+  );
+});
 </script>
 
 <template>
   <article
     class="flex flex-col items-center gap-3 cursor-pointer w-full"
-    :class="{ 'pointer-events-none': !anime?.poster }"
+    :class="[
+      'flex flex-col items-center gap-3 w-full',
+      {
+        'cursor-pointer': hasAnyData,
+        'pointer-events-none': !hasAnyData,
+        'animate-pulse': !hasAnyData,
+        'transition duration-300 ease-in-out transform': hasAnyData,
+      },
+    ]"
   >
     <div class="relative w-full aspect-[3/4.248] rounded-[15px] overflow-hidden">
       <div

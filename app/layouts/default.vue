@@ -9,7 +9,7 @@ import Footer from "@/widgets/footer";
 
     <div class="max-w-[1440px] mx-auto"><slot /></div>
 
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -22,5 +22,8 @@ import Footer from "@/widgets/footer";
   background-attachment: fixed;
   min-height: 100vh;
   scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

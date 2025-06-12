@@ -3,7 +3,7 @@ import { useGetAnimeList } from "@/shared/composables/useGetAnimeList";
 import { useAnimeStore } from "@/shared/stores/store";
 import { addUniqueAnime } from "~/shared/helpers/addUniqueAnime";
 import AnimeCard from "~/shared/ui/card-anime";
-import AnimeGrid from "@/shared/components/anime-grid";
+import AnimeGrid from "@/shared/components/layouts/anime-grid";
 
 const { aniList, page } = storeToRefs(useAnimeStore());
 
@@ -37,13 +37,9 @@ const displayedItems = computed<IAnimeCard[]>(() => {
   if (!aniList.value) {
     return Array(10).fill({} as IAnimeCard);
   }
-
-  if (isLoading.value) {
-    const skeletonItems = Array(5).fill({} as IAnimeCard);
-    return [...aniList.value, ...skeletonItems];
-  }
-
-  return aniList.value;
+  return isLoading.value || !aniList.value[aniList.value.length - 1].code
+    ? [...aniList.value, ...Array(5).fill({} as IAnimeCard)]
+    : aniList.value;
 });
 </script>
 
@@ -62,9 +58,9 @@ const displayedItems = computed<IAnimeCard[]>(() => {
         :key="index"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
-        @click="goPageAnime(animeCard.code)"
-      ></AnimeCard>
-    </AnimeGrid>
+        @click="animeCard?.code ? goPageAnime(animeCard.code) : null"
+      ></AnimeCard
+    ></AnimeGrid>
 
     <Spinner v-if="aniList && isLoading" />
 
