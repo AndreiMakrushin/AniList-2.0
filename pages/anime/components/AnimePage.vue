@@ -51,8 +51,12 @@ const recordAnimeStatus = async () => {
   }
 };
 
+const userId = computed(() => {
+  return store?.user.value?.id;
+});
+
 const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
-  const { currentTime } = await addAnimeToHistory(history);
+  const { currentTime } = await addAnimeToHistory(history, userId.value!);
 
   if (history.videoElement && currentTime) {
     history.videoElement.currentTime = currentTime;
@@ -183,13 +187,13 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
         :anime-play="anime?.player"
         :anime-id="anime?.id!"
         :anime-name="anime?.names.ru"
-        :user="store.user.value"
+        :update-history="store.user.value ? true : false"
         :anime-code="anime?.code!"
         :episode="+episode"
         preview-url="https://dl-20211030-963.anilib.top"
         episode-url="https://cache.libria.fun"
         @add-history="checkAnimeHistory($event)"
-        @real-time-update="updateAnimeHistory($event)"
+        @real-time-update="updateAnimeHistory($event, userId!)"
       />
     </div>
   </div>

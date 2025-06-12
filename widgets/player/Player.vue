@@ -6,7 +6,6 @@ import ProgressBar from "./widgetsPlayer/progress-bar/ProgressBar.vue";
 import Controllers from "./widgetsPlayer/Controllers.vue";
 import type {
   IAnimePlayer,
-  IUser,
   IAddAnimeToHistory,
   IRealTimeUpdate,
 } from "@/shared/types";
@@ -21,8 +20,7 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
-  user?: IUser | null;
-  /* вынести из плеера */
+  updateHistory: boolean;
   episode?: number | undefined;
   animeCode: string;
   animePlay: IAnimePlayer | undefined;
@@ -93,9 +91,8 @@ const updateEpisode = (event: number) => {
 };
 
 const recordAnimeToHistory = () => {
-  if (props.user) {
+  if (props.updateHistory) {
     emit("addHistory", {
-      userId: props.user.id,
       videoElement: videoElement.value,
       animeId: props.animeId,
       animeName: props.animeName!,
@@ -195,10 +192,9 @@ const timeUpdate = () => {
 };
 
 watch(timer, () => {
-  if (!props.user) return;
+  if (!props.updateHistory) return;
   if (timer.value < 1) return;
   emit("realTimeUpdate", {
-    userId: props.user?.id,
     animeId: props.animeId,
     episodeAnime: episodeAnime.value,
     timer: timer.value,

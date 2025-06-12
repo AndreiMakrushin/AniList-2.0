@@ -5,19 +5,19 @@ export const useSupabaseAnime = () => {
 
     return {
        
-      addAnimeToHistory: async (payload: IAddAnimeToHistory): Promise<IAnimeHistoryRecord> => {
+      addAnimeToHistory: async (payload: IAddAnimeToHistory, userId: string): Promise<IAnimeHistoryRecord> => {
         try {
           const { data: existsAnime } = await $supabase
             .from('animeUserList')
             .select()
             .eq("animeId", payload.animeId)
             .eq("episode", payload.episodeAnime)
-            .eq("userId", payload.userId)
+            .eq("userId", userId)
             .single();
       
           const animeToHistory = {
             animeId: payload.animeId,
-            userId: payload.userId,
+            userId: userId,
             current_Time: payload.videoElement?.currentTime,
             duration_Time: Math.floor(payload.videoElement?.duration ?? 0),
             nameAnime: payload.animeName,
@@ -119,7 +119,7 @@ export const useSupabaseAnime = () => {
               };
             }
           },
-          updateAnimeHistory: async (update: IRealTimeUpdate) => {
+          updateAnimeHistory: async (update: IRealTimeUpdate, userId: string) => {
             try {
               
               const { data: existingRecord, error: findError } = await $supabase
@@ -127,14 +127,14 @@ export const useSupabaseAnime = () => {
                 .select()
                 .eq('animeId', update.animeId)
                 .eq('episode', update.episodeAnime)
-                .eq('userId', update.userId)
+                .eq('userId', userId)
                 .maybeSingle();
           
               if (findError) throw findError;
               
               
               if (!existingRecord) {
-                console.error(`Anime not found for user ${update.userId}, anime ${update.animeId}, episode ${update.episodeAnime}`);
+                console.error(`Anime not found for user ${userId}, anime ${update.animeId}, episode ${update.episodeAnime}`);
                 return null; 
               }
           
