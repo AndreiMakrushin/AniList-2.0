@@ -50,7 +50,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-5 !min-w-[80%] mx-auto">
+  <div class="p-5 w-[80%] mx-auto">
     <div class="block bg-white shadow-shadowDrop rounded-[15px] p-5 mb-5">
       <div
         class="flex flex-row gap-10 max-pads:gap-5 max-pads:flex-col max-pads:items-center"

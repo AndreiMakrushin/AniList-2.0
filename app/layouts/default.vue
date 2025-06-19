@@ -22,8 +22,5 @@ import Footer from "@/widgets/footer";
   background-attachment: fixed;
   min-height: 100vh;
   scroll-behavior: smooth;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 </style>
