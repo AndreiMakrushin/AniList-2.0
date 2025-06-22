@@ -57,7 +57,7 @@ onMounted(async () => {
       >
         <Avatar
           :img="user?.avatar_url"
-          class="max-h-[150px] aspect-square"
+          class="max-h-[140px] aspect-square"
           @click="deleteAvatar"
         />
 
