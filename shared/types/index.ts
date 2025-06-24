@@ -60,17 +60,19 @@ export interface IUser {
     code: number
     year: number
     week_day: number
+    description: string
   }
   export interface IAnimeCard{
     id: number
     code: string
-    names: {
-      en: string
-      ru: string
-    }
+    name: {
+      english: string | null
+      main: string | null
+    } | null
     poster: string
     description: string
     season: ISeason
+    year: string
   }
 
   export type TUserResponse<T = unknown> = 
@@ -81,16 +83,20 @@ export interface IUser {
     id: number;
     code: string;
     description: string;
+    year: string;
     updated: number;
     announce: string | null;
     franchises: [];
-    genres: [];
+    genres: {
+      id: number;
+      name: string;
+    }[];
     in_favorites: number;
     player: IAnimePlayer;
     last_change: number;
-    names: {
-      en: string;
-      ru: string;
+    name: {
+      english: string;
+      main: string;
       alternative: string | null;
     };
     season: ISeason;
@@ -98,17 +104,31 @@ export interface IUser {
       string: string;
       code: number;
     };
-    team: {
-      voice: string[]
-    };
+    members:{
+      id: string;
+      role:{
+        value: string;
+        description: string;
+      }
+      nickname: string;
+      user: {
+        id: string;
+        avatar: {
+          preview: string;
+          thumbnail: string;
+        };
+      }
+      }[]
     torrents: object;
     type: {
+      value: string;
       code: number;
       string: string;
       episodes: number;
       full_string: string;
       length: number;
     };
+    episodes: IEpisode[]
   }
 
   export interface IHls{
@@ -144,17 +164,12 @@ export interface IUser {
   }
   
   interface IAnimePosters {
-    posters: {
-      small: {
-        url: string;
-      };
-      medium: {
-        url: string;
-      };
-      original: {
-        url: string;
-      };
-    };
+    poster: {
+      original: string;
+      preview: string;
+      src: string;
+    }
   }
+  
   
  export type TAnime = IAnimeBase & IAnimePosters;

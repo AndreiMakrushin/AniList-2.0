@@ -4,8 +4,10 @@ export const useGetAnimeList = async(page: number) =>{
     const config = useRuntimeConfig()
     const list = config.public.ANIME_LIST
 
+    const api = config.public.ANILIBRIA_API
+
     try {
-      const response = await fetch(`${list}${page}&limit=10`);
+      const response = await fetch(`${api}${list}?page=${page}&limit=10`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -17,13 +19,14 @@ export const useGetAnimeList = async(page: number) =>{
         throw new Error('No anime data found in response');
       }
       
-      return responseData.list.map((item: TAnime): IAnimeCard => ({
-          id: item.id,
-          code: item.code,
-          names: item.names,
-          poster: item.posters.original.url ?? item.posters.medium.url ?? item.posters.small.url,
-          description: item.description,
-          season: item.season
+      return responseData.data?.map((item: TAnime): IAnimeCard => ({
+        id: item.id,
+        code: item.code || '',
+        name: item.name || '',
+        poster: `${api}${item.poster?.preview}` || '',
+        description: item.description ?? '',
+        season: item.season ?? '',
+        year: item.year ?? 0
       })) ?? []
   }
   catch (error) {

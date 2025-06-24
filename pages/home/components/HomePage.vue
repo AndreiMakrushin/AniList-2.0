@@ -29,16 +29,16 @@ const loadMore = async () => {
   await fetchAndAddAnime();
 };
 
-const goPageAnime = (code: string) => {
-  navigateTo(`/anime/${code}/1`);
+const goPageAnime = (id: number) => {
+  navigateTo(`/anime/${id}/1`);
 };
 
 const displayedItems = computed<IAnimeCard[]>(() => {
   if (!aniList.value) {
     return Array(10).fill({} as IAnimeCard);
   }
-  return isLoading.value || !aniList.value[aniList.value.length - 1].code
-    ? [...aniList.value, ...Array(5).fill({} as IAnimeCard)]
+  return isLoading.value || !aniList.value[aniList.value.length - 1].id
+    ? [...aniList.value, ...Array(10).fill({} as IAnimeCard)]
     : aniList.value;
 });
 </script>
@@ -58,7 +58,7 @@ const displayedItems = computed<IAnimeCard[]>(() => {
         :key="index"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
-        @click="animeCard?.code ? goPageAnime(animeCard.code) : null"
+        @click="animeCard?.id ? goPageAnime(animeCard.id) : null"
       ></AnimeCard
     ></AnimeGrid>
 

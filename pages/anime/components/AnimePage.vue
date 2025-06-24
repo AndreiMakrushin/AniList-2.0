@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { TAnime } from "@/shared/types";
+import type { TAnime, } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
 import { animeStatus } from "~/shared/helpers/animeStatuses";
 import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
 const props = defineProps<{
   episode: string;
-  anime: TAnime;
+  anime: TAnime | null;
 }>();
 
 const anime = ref<TAnime | null>(props.anime);
@@ -46,8 +46,8 @@ const animeState = computed(() => {
 const recordAnimeStatus = async () => {
   if (store?.user.value && animeState.value) {
     await addAnimeToStatus(store.user.value.id, {
-      img: anime.value!.posters?.original.url,
-      nameAnime: anime.value!.names.ru,
+      img: anime.value!.poster.original,
+      nameAnime: anime.value!.name.main,
       animeId: anime.value!.id,
       statusId: animeState.value.id,
       statusRu: animeState.value.statusRu,
@@ -100,7 +100,7 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
           class="w-full h-full object-cover transition-opacity duration-300"
           :src="
             anime
-              ? `https://dl-20211030-963.anilib.top${anime?.posters.original.url}`
+              ? `https://anilibria.top${anime.poster.src}`
               : ''
           "
           :class="{ 'opacity-0': !anime }"
@@ -130,24 +130,24 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
         <div class="flex-1 relative z-10 p-5 flex flex-col gap-4">
           <div>
             <h1 class="text-3xl md:text-4xl font-bold text-white mb-1">
-              {{ anime?.names.ru || "Загрузка..." }}
+              {{ anime?.name.main || "Загрузка..." }}
             </h1>
 
-            <p class="text-lg text-gray-300">{{ anime?.names.en }}</p>
+            <p class="text-lg text-gray-300">{{ anime?.name.english }}</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-3 text-gray-400">
             <span class="px-3 py-1 rounded-full bg-gray-800 text-sm font-medium">
-              {{ anime?.status.string }}
+              {{ anime?.season.description}}
             </span>
 
             <div class="w-1 h-1 rounded-full bg-gray-600"></div>
 
-            <span>{{ anime?.season.year }}</span>
+            <span>{{ anime?.year }}</span>
 
             <div class="w-1 h-1 rounded-full bg-gray-600"></div>
 
-            <span>{{ anime?.type.string }}</span>
+            <span>{{ anime?.type.value }}</span>
           </div>
 
           <div class="flex flex-wrap items-baseline gap-2">
@@ -156,10 +156,10 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
             <template v-if="anime?.genres?.length">
               <span
                 v-for="genre in anime.genres"
-                :key="genre"
+                :key="genre.id"
                 class="px-2 py-1 text-sm rounded-full bg-blue-900/50 text-blue-300"
               >
-                {{ genre }}
+                {{ genre.name }}
               </span>
             </template>
 
@@ -169,13 +169,13 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
           <div class="flex flex-wrap items-baseline gap-2">
             <span class="text-gray-400">Озвучка:</span>
 
-            <template v-if="anime?.team?.voice?.length">
+            <template v-if="anime?.members.length">
               <span
-                v-for="voice in anime.team.voice"
-                :key="voice"
+                v-for="voice in anime.members"
+                :key="voice.id"
                 class="px-2 py-1 text-sm rounded-full bg-purple-900/50 text-purple-300"
               >
-                {{ voice }}
+                {{ voice.nickname }}
               </span>
             </template>
 
@@ -213,11 +213,11 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
       <Player
         :anime-play="anime?.player"
         :anime-id="anime?.id!"
-        :anime-name="anime?.names.ru"
+        :anime-name="anime?.name.main"
         :update-history="store.user.value ? true : false"
         :anime-code="anime?.code!"
         :episode="+episode"
-        preview-url="https://dl-20211030-963.anilib.top"
+        :preview-url="anime?.poster.original"
         episode-url="https://cache.libria.fun"
         @add-history="checkAnimeHistory($event)"
         @real-time-update="updateAnimeHistory($event, userId!)"

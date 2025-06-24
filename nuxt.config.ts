@@ -72,12 +72,14 @@ build: {
     public:{
       SUPABASE_URL: "",
       SUPABASE_KEY: "",
+      ANILIBRIA_API: "",
       ANIME_LIST: "",
       ANIME_SINGLE: "",
       ANIME_SEARCH: "",
       ANIME_SIMILAR: "",
       ANIME_POSTER: ""
     }
+    
   },
   plugins: ["~/plugins/supabase.client"],
 

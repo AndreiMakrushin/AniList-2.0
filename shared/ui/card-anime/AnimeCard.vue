@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const hasAnyData = computed(() => {
   return (
-    props.anime && (props.anime.poster || props.anime.names?.ru || props.anime.names?.en)
+    props.anime && (props.anime.poster || props.anime.name?.main || props.anime.name?.english)
   );
 });
 </script>
@@ -34,7 +34,7 @@ const hasAnyData = computed(() => {
       <img
         v-if="anime?.poster"
         ref="imgRef"
-        :src="`https://dl-20240330-7.anilib.moe${anime.poster}`"
+        :src="anime.poster"
         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
       />
 
@@ -50,7 +50,7 @@ const hasAnyData = computed(() => {
 
     <div class="flex flex-col items-center w-full min-h-6">
       <div
-        v-if="!anime?.names?.ru && !anime?.names?.en"
+        v-if="!anime?.name?.main && !anime?.name?.english"
         class="w-full h-6 rounded-[15px] bg-gray-200 dark:bg-gray-700"
       ></div>
 
@@ -58,7 +58,7 @@ const hasAnyData = computed(() => {
         v-else
         class="font-medium w-full text-white whitespace-nowrap text-ellipsis overflow-hidden"
       >
-        {{ anime?.names.ru ?? anime?.names.en }}
+        {{ anime?.name.main ?? anime?.name.english}}
       </h2>
     </div>
   </article>
