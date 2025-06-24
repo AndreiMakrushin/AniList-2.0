@@ -20,16 +20,17 @@ const {
 const statusAnime = ref("");
 
 const lastUpdate = computed(() => {
-  const date = new Date((anime.value?.updated as number) * 1000);
-  const day = ("0" + date.getDate()).slice(-2);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const date = new Date(anime.value?.updated_at || 0);
+  
+  const day = new String(date.getDate()).padStart(2, "0");
+  const month = new String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${day}.${month}.${year}`;
 });
 
 const currentEpisodeList = computed(() => {
-  return Object.keys(anime.value?.player?.list || {}).length || "0";
+  return Object.keys(anime.value?.episodes|| {}).length || "0";
 });
 
 const animeState = computed(() => {
@@ -211,14 +212,13 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
       </div>
 
       <Player
-        :anime-play="anime?.player"
+        :anime-play="anime?.episodes"
         :anime-id="anime?.id!"
         :anime-name="anime?.name.main"
         :update-history="store.user.value ? true : false"
-        :anime-code="anime?.code!"
+        
         :episode="+episode"
-        :preview-url="anime?.poster.original"
-        episode-url="https://cache.libria.fun"
+        preview-url="https://anilibria.top"
         @add-history="checkAnimeHistory($event)"
         @real-time-update="updateAnimeHistory($event, userId!)"
       />

@@ -84,7 +84,7 @@ export interface IUser {
     code: string;
     description: string;
     year: string;
-    updated: number;
+    updated_at: string;
     announce: string | null;
     franchises: [];
     genres: {
@@ -92,7 +92,6 @@ export interface IUser {
       name: string;
     }[];
     in_favorites: number;
-    player: IAnimePlayer;
     last_change: number;
     name: {
       english: string;
@@ -138,28 +137,29 @@ export interface IUser {
   }
 
   export interface IEpisode {
-    created_timestamp: number;
-    episode: number;
+    id:string;  
+    original: number;
     hls: {[key: string]: IHls};
     name: string;
-    preview: string;
-    skips: {
-      ending: [];
-      opening: [];
-      uuid: string;
+    preview: {
+      src: string
     };
+    opening: {
+      stop: number;
+      start: number;
+    }
+    ending: {
+      stop: number;
+      start: number;
+    }
   }
   
   export interface IAnimePlayer {
     
       alternative_player: string | null;
-      episodes: {
-        first: number;
-        last: number;
-        string: string;
-      };
+      
       host: string | null;
-      list: {[key: string]: IEpisode};
+      episodes: IEpisode[]
     
   }
   
