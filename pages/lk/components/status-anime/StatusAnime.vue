@@ -11,6 +11,10 @@ const sortedAnimeByUpdate = computed(() => {
       return dateB.getTime() - dateA.getTime();
     });
 });
+
+const pushToAnimePage = (code: string, episode: number) => {
+  navigateTo(`/anime/${code}/${episode}`);
+};
 </script>
 
 <template>
@@ -21,6 +25,7 @@ const sortedAnimeByUpdate = computed(() => {
       v-for="item in sortedAnimeByUpdate"
       :key="item.animeId"
       :anime="item"
+      @click="pushToAnimePage(item.code, 1)"
     />
   </div>
 </template>

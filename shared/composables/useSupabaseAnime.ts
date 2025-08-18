@@ -102,6 +102,7 @@ export const useSupabaseAnime = () => {
                     img: anime.img,
                     nameAnime: anime.nameAnime,
                     animeId: anime.animeId,
+                    code: anime.code,
                     statusId: anime.statusId,
                     statusRu: anime.statusRu,
                     statusEn: anime.statusEn,

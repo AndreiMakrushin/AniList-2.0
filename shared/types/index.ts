@@ -42,6 +42,7 @@ export interface IUser {
     nameAnime: string;
     animeId: number;
     created_at?: string
+    code: string;
     statusId: string;
     statusRu: string;
     statusEn: string
@@ -82,7 +83,7 @@ export interface IUser {
 
   interface IAnimeBase {
     id: number;
-    code: string;
+    alias: string;
     description: string;
     year: string;
     updated_at: string;
@@ -156,9 +157,7 @@ export interface IUser {
   }
   
   export interface IAnimePlayer {
-    
       alternative_player: string | null;
-      
       host: string | null;
       episodes: IEpisode[]
     

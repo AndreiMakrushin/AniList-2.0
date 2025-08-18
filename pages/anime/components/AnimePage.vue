@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TAnime, } from "@/shared/types";
+import type { TAnime } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
 import { animeStatus } from "~/shared/helpers/animeStatuses";
@@ -21,7 +21,7 @@ const statusAnime = ref("");
 
 const lastUpdate = computed(() => {
   const date = new Date(anime.value?.updated_at || 0);
-  
+
   const day = new String(date.getDate()).padStart(2, "0");
   const month = new String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
@@ -30,7 +30,7 @@ const lastUpdate = computed(() => {
 });
 
 const currentEpisodeList = computed(() => {
-  return Object.keys(anime.value?.episodes|| {}).length || "0";
+  return Object.keys(anime.value?.episodes || {}).length || "0";
 });
 
 const animeState = computed(() => {
@@ -47,9 +47,10 @@ const animeState = computed(() => {
 const recordAnimeStatus = async () => {
   if (store?.user.value && animeState.value) {
     await addAnimeToStatus(store.user.value.id, {
-      img: anime.value!.poster.original,
+      img: anime.value!.poster.preview,
       nameAnime: anime.value!.name.main,
       animeId: anime.value!.id,
+      code: anime.value!.alias,
       statusId: animeState.value.id,
       statusRu: animeState.value.statusRu,
       statusEn: animeState.value.statusEn,
@@ -98,11 +99,7 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
       <div class="relative aspect-[2/3] rounded-xl overflow-hidden bg-gray-800/50">
         <img
           class="w-full h-full object-cover transition-opacity duration-300"
-          :src="
-            anime
-              ? `https://anilibria.top${anime.poster.src}`
-              : ''
-          "
+          :src="anime ? `https://anilibria.top${anime.poster.src}` : ''"
           :class="{ 'opacity-0': !anime }"
           alt="Постер аниме"
           loading="lazy"
@@ -138,7 +135,7 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
 
           <div class="flex flex-wrap items-center gap-3 text-gray-400">
             <span class="px-3 py-1 rounded-full bg-gray-800 text-sm font-medium">
-              {{ anime?.season.description}}
+              {{ anime?.season.description }}
             </span>
 
             <div class="w-1 h-1 rounded-full bg-gray-600"></div>
@@ -211,11 +208,11 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
       </div>
 
       <Player
-        :anime-play="anime?.episodes"
-        :anime-id="anime?.id!"
-        :anime-name="anime?.name.main"
+        :anime-play="anime!.episodes"
+        :anime-id="anime!.id!"
+        :anime-code="anime!.alias"
+        :anime-name="anime!.name.main"
         :update-history="store.user.value ? true : false"
-        
         :episode="+episode"
         preview-url="https://anilibria.top"
         @add-history="checkAnimeHistory($event)"

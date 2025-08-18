@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <article
-    class="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-[1.02] h-fit"
+    class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-[1.02] h-fit"
   >
     <img
       :src="`https://dl-20211030-963.anilib.top${anime.img}`"

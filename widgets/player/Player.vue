@@ -24,6 +24,7 @@ const props = defineProps<{
   episode?: number | undefined;
   animePlay: IEpisode[] | undefined;
   animeName?: string;
+  animeCode: string;
   animeId: number;
   previewUrl: string;
 }>();
@@ -101,7 +102,7 @@ const recordAnimeToHistory = () => {
       animeName: props.animeName!,
       animePoster: previewAnime.value!,
       episodeAnime: episodeAnime.value,
-      code: "",
+      code: props.animeCode,
     });
   }
 };
