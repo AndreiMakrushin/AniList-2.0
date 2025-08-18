@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useSupabaseAuth } from "@/shared/helpers/useSupabaseAuth";
-import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
+import { useSupabaseAuth } from "~/shared/composables/useSupabaseAuth";
+import { useSupabaseAnime } from "~/shared/composables/useSupabaseAnime";
 import type { IAddAnime, IAnimeStatus } from "@/shared/types";
 import HistoryAnime from "~/widgets/anime-history";
 import { registrationPeriod } from "~/shared/helpers/registrationPeriod";

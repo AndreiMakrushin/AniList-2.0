@@ -10,7 +10,7 @@ import type {
   IRealTimeUpdate,
 } from "@/shared/types";
 import noImg from "@/shared/assets/image/noAnime.png";
-import { useScreenShooter } from "@/shared/helpers/useScreenShooter";
+import { useScreenShooter } from "~/shared/composables/useScreenShooter";
 import QualityVideo from "./widgetsPlayer/QualityVideo.vue";
 import { videoTimer } from "./helpers/video-timer";
 

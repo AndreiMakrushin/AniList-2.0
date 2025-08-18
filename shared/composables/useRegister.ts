@@ -1,5 +1,5 @@
 import type { IUser, IRegisterForm } from '~/shared/types'
-import { useSupabaseAuth } from '../helpers/useSupabaseAuth'
+import { useSupabaseAuth } from './useSupabaseAuth'
 
 type TRegisterResponse<T> = 
   | { data: T; error: null }

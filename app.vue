@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGetUser } from "@/shared/helpers/useGetUser";
+import { useGetUser } from "~/shared/composables/useGetUser";
 
 onMounted(async () => {
   await useGetUser();

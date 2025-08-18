@@ -90,6 +90,7 @@ build: {
   alias: {
     assets: './shared/assets',
     public: './shared/public',
+    helpers: './shared/helpers',
   },
   components: [
     {

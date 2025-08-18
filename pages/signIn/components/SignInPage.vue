@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ILoginForm } from "@/shared/types";
 import { useAuth } from "@/shared/composables/useAuth";
-import { useGetUser } from "@/shared/helpers/useGetUser";
+import { useGetUser } from "~/shared/composables/useGetUser";
 
 const user: ILoginForm = {
   email: "",

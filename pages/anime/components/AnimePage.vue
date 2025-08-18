@@ -3,7 +3,7 @@ import type { TAnime, } from "@/shared/types";
 import Player from "~/widgets/player/Player.vue";
 import { useAnimeStore } from "@/shared/stores/store";
 import { animeStatus } from "~/shared/helpers/animeStatuses";
-import { useSupabaseAnime } from "@/shared/helpers/useSupabaseAnime";
+import { useSupabaseAnime } from "~/shared/composables/useSupabaseAnime";
 const props = defineProps<{
   episode: string;
   anime: TAnime | null;
