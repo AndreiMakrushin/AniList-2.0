@@ -94,7 +94,6 @@ const checkAnimeHistory = async (history: IAddAnimeToHistory) => {
 
 <template>
   <div class="w-full flex flex-row gap-5 p-4 text-white">
-    <!-- Левая колонка (постер) -->
     <div class="w-full md:w-[300px] max-pads:hidden flex-shrink-0 flex flex-col gap-5">
       <div class="relative aspect-[2/3] rounded-xl overflow-hidden bg-gray-800/50">
         <img

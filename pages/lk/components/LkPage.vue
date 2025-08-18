@@ -1,51 +1,19 @@
 <script setup lang="ts">
-import { useSupabaseAuth } from "~/shared/composables/useSupabaseAuth";
-import { useSupabaseAnime } from "~/shared/composables/useSupabaseAnime";
-import type { IAddAnime, IAnimeStatus } from "@/shared/types";
-import HistoryAnime from "~/widgets/anime-history";
+import HistoryAnime from "./history-anime/HistoryAnime.vue";
+import StatusAnime from "./status-anime/StatusAnime.vue";
 import { registrationPeriod } from "~/shared/helpers/registrationPeriod";
 import { animeStatus } from "~/shared/helpers/animeStatuses";
-
-import { useAnimeStore } from "@/shared/stores/store";
+import { useLKPage } from "../composables/useLKPage";
 
 const props = defineProps<{
   id: string;
   statusCode: string;
 }>();
 
-const { user } = storeToRefs(useAnimeStore());
+const { user, animeList, isLoading, deleteAvatar, getAnime } = useLKPage();
 
-const { deleteUserAvatar } = useSupabaseAuth();
-const { getAnimeToHistory, getAnimeToStatus } = useSupabaseAnime();
-
-const animeList = ref<IAddAnime[] | IAnimeStatus[] | null>(null);
-
-const deleteAvatar = async () => {
-  await deleteUserAvatar(props.id);
-};
-
-const isLoading = ref(false);
-const error = ref<unknown | null>(null);
-
-onMounted(async () => {
-  try {
-    isLoading.value = true;
-    error.value = null;
-
-    const data =
-      props.statusCode === "history"
-        ? await getAnimeToHistory(props.id)
-        : await getAnimeToStatus(props.statusCode, props.id);
-
-    if (data) {
-      animeList.value = data;
-    }
-  } catch (err) {
-    error.value = err;
-    console.error("Ошибка загрузки:", err);
-  } finally {
-    isLoading.value = false;
-  }
+onMounted(() => {
+  getAnime(props.statusCode, props.id);
 });
 </script>
 
@@ -58,7 +26,7 @@ onMounted(async () => {
         <Avatar
           :img="user?.avatar_url"
           class="max-h-[140px] aspect-square"
-          @click="deleteAvatar"
+          @click="deleteAvatar(user!.id)"
         />
 
         <div class="flex flex-col gap-2">
@@ -92,7 +60,14 @@ onMounted(async () => {
         </NuxtLink>
       </div>
 
-      <HistoryAnime v-if="animeList?.length" :anime="animeList as IAddAnime[]" class="col-span-3" />
+      <div v-if="isLoading" class="col-span-3 text-white">Загрузка...</div>
+
+      <HistoryAnime v-if="statusCode === 'history'" :anime="animeList as IAddAnime[]" />
+
+      <StatusAnime
+        v-else-if="statusCode !== 'history' && animeList?.length"
+        :anime="animeList as IAnimeStatus[]"
+      />
 
       <div v-else class="col-span-3 text-white">Тут ничего нет</div>
     </div>
