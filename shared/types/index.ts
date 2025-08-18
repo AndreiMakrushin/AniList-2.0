@@ -41,7 +41,7 @@ export interface IUser {
     img: string;
     nameAnime: string;
     animeId: number;
-    created_at: string
+    created_at?: string
     statusId: string;
     statusRu: string;
     statusEn: string

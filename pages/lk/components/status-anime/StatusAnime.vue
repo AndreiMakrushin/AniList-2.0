@@ -6,8 +6,8 @@ const sortedAnimeByUpdate = computed(() => {
   return props.anime
     ?.filter((item: IAnimeStatus) => item.created_at !== null)
     .sort((a: IAnimeStatus, b: IAnimeStatus) => {
-      const dateA = new Date(a.created_at);
-      const dateB = new Date(b.created_at);
+      const dateA = new Date(a.created_at!);
+      const dateB = new Date(b.created_at!);
       return dateB.getTime() - dateA.getTime();
     });
 });
