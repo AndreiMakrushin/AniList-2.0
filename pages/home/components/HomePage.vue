@@ -2,7 +2,6 @@
 import { useGetAnimeList } from "@/shared/composables/useGetAnimeList";
 import { useAnimeStore } from "@/shared/stores/store";
 import { addUniqueAnime } from "~/shared/helpers/addUniqueAnime";
-import AnimeCard from "~/shared/ui/card-anime";
 import AnimeGrid from "@/shared/components/layouts/anime-grid";
 
 const { aniList, page } = storeToRefs(useAnimeStore());
