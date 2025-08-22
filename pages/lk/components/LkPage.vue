@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-5 w-[80%] mx-auto">
+  <div class="p-5 w-[80%] max-pads:w-full mx-auto">
     <div class="block bg-white shadow-shadowDrop rounded-[15px] p-5 mb-5">
       <div
         class="flex flex-row gap-10 max-pads:gap-5 max-pads:flex-col max-pads:items-center"
@@ -43,14 +43,14 @@ onMounted(() => {
 
     <div class="grid grid-cols-4 gap-5 max-pads:flex max-pads:flex-col">
       <div
-        class="bg-white sticky top-24 shadow-shadowDrop rounded-[15px] h-fit p-5 mb-5 flex flex-col overflow-scroll gap-3 max-pads:flex max-pads:flex-row max-pads:gap-3"
+        class="bg-white sticky z-50 top-24 shadow-shadowDrop rounded-[15px] h-fit p-5 flex flex-col overflow-x-auto gap-3 max-pads:flex max-pads:flex-row max-pads:gap-3"
       >
         <NuxtLink
           v-for="status in animeStatus"
           :key="status.id"
           :to="`/lk/${id}/${status.id}`"
           :class="[
-            'px-3 py-2 rounded-lg transition-all text-nowrap duration-200 cursor-pointer',
+            'px-3 py-2 rounded-lg transition-all text-nowrap duration-200 truncate max-pads:whitespace-nowrap max-pads:overflow-visible max-pads:text-clip cursor-pointer',
             statusCode === status.id
               ? 'bg-[#f5f0ff] text-[#7e22ce] font-medium border-none'
               : 'text-[#6b7280] hover:bg-[#f8f5ff]',
@@ -69,9 +69,7 @@ onMounted(() => {
         :anime="animeList as IAnimeStatus[]"
       />
 
-      <div v-else class="col-span-3 text-white">Тут ничего нет</div>
+      <div v-else-if="!isLoading" class="col-span-3 text-white">Тут ничего нет</div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

@@ -130,3 +130,12 @@
   border-radius: 12px;
   width: 4px;
 }
+
+@media screen and (min-width: 1150px) {
+  .scroll-custom::-webkit-scrollbar {
+    width: 8px;
+  }
+  .scroll-custom::-webkit-scrollbar-thumb {
+    width: 6px;
+  }
+}

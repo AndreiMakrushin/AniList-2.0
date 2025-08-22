@@ -21,7 +21,7 @@ export const useGetAnimeList = async(page: number) =>{
       
       return responseData.data?.map((item: TAnime): IAnimeCard => ({
         id: item.id,
-        code: item.code || '',
+        code: item.alias || '',
         name: item.name || '',
         poster: `${api}${item.poster?.preview}` || '',
         description: item.description ?? '',

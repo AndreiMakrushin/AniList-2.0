@@ -19,7 +19,7 @@ const pushToAnimePage = (code: string, episode: number) => {
 
 <template>
   <div
-    class="col-span-3 text-black grid grid-cols-3 max-pads:grid-cols-2 gap-5 max-mobile:grid-cols-1"
+    class="col-span-3 text-black grid grid-cols-3 max-pads:grid-cols-3 gap-5 max-mobile:grid-cols-2"
   >
     <StatusAnimeCard
       v-for="item in sortedAnimeByUpdate"

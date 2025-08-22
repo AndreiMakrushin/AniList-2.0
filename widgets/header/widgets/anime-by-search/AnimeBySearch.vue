@@ -30,37 +30,33 @@ const goPageAnime = (code: string) => {
       @update:model="debouncedSearch"
     />
 
-    <div
-      v-if="arrayAnime"
-      class="absolute bottom-0 right-0 z-30 transform translate-y-[calc(100%+10px)] w-full"
-    >
+    <div v-if="arrayAnime" class="absolute top-full left-0 z-30 mt-2 w-full">
       <ol
-        class="flex flex-col gap-5 shadow-shadowDrop bg-cardOpacity rounded-[10px] p-5 w-full"
+        class="flex flex-col gap-3 shadow-lg max-h-96 overflow-y-auto bg-gray-800 rounded-lg p-4 w-full box-border"
       >
         <li
           v-for="(anime, index) in arrayAnime"
           :key="index"
-          class="w-full flex cursor-pointer flex-row gap-5 text-white hover:bg-cardOpacity2 duration-short rounded-[10px]"
-          @click="goPageAnime(anime.code)"
+          class="flex cursor-pointer p-2 gap-3 text-white hover:bg-gray-700 transition-colors duration-200 rounded-lg items-start"
+          @click="goPageAnime(anime.alias)"
         >
           <img
-            :src="`https://dl-20211030-963.anilib.top${anime.posters.small.url}`"
-            class="w-[60px] rounded-[10px]"
+            :src="`https://anilibria.top${anime.poster.src}`"
+            class="w-16 h-20 object-cover rounded-lg flex-shrink-0"
           />
 
-          <div class="flex flex-col w-full">
-            <h2
-              class="font-medium w-[70%] whitespace-nowrap text-ellipsis overflow-hidden"
-            >
-              {{ anime.names.ru }}
+          <div class="flex flex-col min-w-0 flex-1">
+            <h2 class="font-medium text-sm truncate">
+              {{ anime.name.main }}
             </h2>
 
-            <span
-              class="text-[12px] w-[70%] text-[#d8d8d8] whitespace-nowrap text-ellipsis overflow-hidden"
-              >{{ anime.names.en }}</span
-            >
+            <span class="text-xs text-gray-400 truncate mt-1">
+              {{ anime.name.english }}
+            </span>
 
-            <span>{{ anime.season.year }}</span>
+            <span class="text-xs text-gray-500 mt-1">
+              {{ anime.season.year }}
+            </span>
           </div>
         </li>
       </ol>

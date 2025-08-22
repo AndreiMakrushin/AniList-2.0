@@ -28,8 +28,8 @@ const loadMore = async () => {
   await fetchAndAddAnime();
 };
 
-const goPageAnime = (id: number) => {
-  navigateTo(`/anime/${id}/1`);
+const goPageAnime = (code: string) => {
+  navigateTo(`/anime/${code}/1`);
 };
 
 const displayedItems = computed<IAnimeCard[]>(() => {
@@ -57,7 +57,7 @@ const displayedItems = computed<IAnimeCard[]>(() => {
         :key="index"
         :anime="animeCard"
         :style="{ 'transition-delay': `${index * 0.1}s` }"
-        @click="animeCard?.id ? goPageAnime(animeCard.id) : null"
+        @click="animeCard?.id ? goPageAnime(animeCard.code) : null"
       ></AnimeCard
     ></AnimeGrid>
 
