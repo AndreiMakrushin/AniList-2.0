@@ -34,7 +34,7 @@ const hasAnyData = computed(() => {
 
       <img
         v-if="anime?.poster"
-        :src="anime.poster"
+        :src="`https://anilibria.top${anime.poster}`"
         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
       />
 

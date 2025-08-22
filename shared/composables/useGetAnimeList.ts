@@ -23,7 +23,7 @@ export const useGetAnimeList = async(page: number) =>{
         id: item.id,
         code: item.alias || '',
         name: item.name || '',
-        poster: `${api}${item.poster?.preview}` || '',
+        poster: `${item.poster?.preview}` || '',
         description: item.description ?? '',
         season: item.season ?? '',
         year: item.year ?? 0
