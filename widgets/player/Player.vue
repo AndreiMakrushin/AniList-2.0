@@ -4,11 +4,7 @@ import SelectEpisode from "./widgetsPlayer/SelectEpisode.vue";
 import Preview from "./widgetsPlayer/Preview.vue";
 import ProgressBar from "./widgetsPlayer/progress-bar/ProgressBar.vue";
 import Controllers from "./widgetsPlayer/Controllers.vue";
-import type {
-  IEpisode,
-  IAddAnimeToHistory,
-  IRealTimeUpdate,
-} from "@/shared/types";
+import type { IEpisode, IAddAnimeToHistory, IRealTimeUpdate } from "@/shared/types";
 import noImg from "@/shared/assets/image/noAnime.png";
 import { useScreenShooter } from "~/shared/composables/useScreenShooter";
 import QualityVideo from "./widgetsPlayer/QualityVideo.vue";
@@ -30,7 +26,7 @@ const props = defineProps<{
 }>();
 
 const episodeAnime = ref<number>(props.episode!);
-const quality = ref<string>("hd");
+const quality = ref<string>("hls_720");
 const timer = ref<number>(0);
 const fullscreen = ref<boolean>(false);
 const videoElement = ref<HTMLVideoElement | null>(null);
@@ -44,16 +40,12 @@ let timeout: ReturnType<typeof setTimeout>;
 
 const previewAnime = computed(() => {
   const preview = props.animePlay![episodeAnime.value]?.preview.src;
-  ;
   return preview ? `${props.previewUrl}${preview}` : noImg;
 });
-
 
 const episode = computed(() => {
   const hlsSource = props.animePlay![episodeAnime.value]?.hls_720;
 
-  console.log(hlsSource);
-  
   return hlsSource ? `${hlsSource}` : "";
 });
 
@@ -173,6 +165,7 @@ const normalScreen = () => {
 };
 
 const openSelectQuality = () => {
+  console.log(isQualityVideo.value);
   isQualityVideo.value = !isQualityVideo.value;
 };
 const updateQuality = (event: string) => {
@@ -272,6 +265,16 @@ onUnmounted(() => {
   }
   clearTimeout(timeout);
 });
+
+const animeQuality = computed(() => {
+  return Object.entries(props.animePlay![episodeAnime.value] ?? {})
+    .filter(([key, value]) => key.startsWith("hls_") && value)
+    .map(([key, _]) => key.replace("hls_", "") + "p",
+    )
+    .sort((a, b) => {
+      return a.localeCompare(b) - b.localeCompare(a);
+    });
+});
 </script>
 
 <template>
@@ -347,7 +350,7 @@ onUnmounted(() => {
     >
       <QualityVideo
         :quality="quality"
-        :anime-quality="props.animePlay![episodeAnime]?.hls || {}"
+        :anime-quality="animeQuality"
         @update-quality="updateQuality($event)"
       />
     </div>

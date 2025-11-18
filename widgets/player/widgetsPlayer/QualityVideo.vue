@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import type { IHls } from "@/shared/types";
 
 const emit = defineEmits<{
   (e: "updateQuality", event: string): void;
@@ -8,7 +7,7 @@ const emit = defineEmits<{
 
 defineProps<{
   quality: string;
-  animeQuality: { [key: string]: IHls };
+  animeQuality: string[]
 }>();
 
 const updateQuality = (event: string) => {
@@ -23,12 +22,12 @@ const updateQuality = (event: string) => {
       :key="key"
       class="cursor-pointer px-2 py-1 hover:bg-gray-700 duration-200"
       :class="{
-        'bg-gray-700': quality === key,
+        'bg-gray-700': quality === q,
         hidden: !q,
       }"
-      @click="updateQuality(key as string)"
+      @click="updateQuality(q as string)"
     >
-      {{ key === "fhd" ? "1080p" : key === "hd" ? "720p" : key === "sd" ? "480p" : key }}
+      {{ q === "fhd" ? "1080p" : q === "hd" ? "720p" : q === "sd" ? "480p" : q }}
     </li>
   </ol>
 </template>
